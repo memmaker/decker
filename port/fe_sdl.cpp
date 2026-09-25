@@ -202,7 +202,7 @@ static void TestHook()
 	char cmd[32] = "", arg[400] = "";
 	int x = 0, y = 0;
 	sscanf(l.c_str(), "%31s %n", cmd, &x);
-	fprintf(stderr, "test: %s\n", l.c_str());
+	fprintf(stderr, "test: %s modal=%d\n", l.c_str(), (int)g_modal.size());
 	strncpy(arg, l.c_str() + std::min((size_t)x, l.size()), sizeof arg - 1);
 	if (g_swallowInput && strcmp(cmd, "shot")) { g_inputCount++; return; }
 	if (!strcmp(cmd, "key")) { UINT vk = strtoul(arg, nullptr, 0); if (!(port_key(CWnd::GetActiveWindow(), vk, 0) && g_modal.empty())) { HandleKey(vk, TRUE, 0); HandleKey(vk, FALSE, 0); } }
@@ -387,9 +387,14 @@ int main(int argc, char **argv)
 	int ww = 640 * scale / 4, wh = 480 * scale / 4;
 	if (const char *s = getenv("DECKER_SCALE")) ww = 640 * atoi(s), wh = 480 * atoi(s);
 #else
-	int ww = 640, wh = 480;
+	int ww = 640, wh = 480; // fixed canvas; the page scales it with CSS (pixelated)
 #endif
-	g_win = SDL_CreateWindow("Decker", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | (getenv("DECKER_HIDDEN") ? SDL_WINDOW_HIDDEN : 0));
+	g_win = SDL_CreateWindow("Decker", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh,
+#ifdef __EMSCRIPTEN__
+		0);
+#else
+		SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI | (getenv("DECKER_HIDDEN") ? SDL_WINDOW_HIDDEN : 0));
+#endif
 	g_ren = SDL_CreateRenderer(g_win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!g_ren) g_ren = SDL_CreateRenderer(g_win, -1, 0);
 	SDL_RenderSetLogicalSize(g_ren, 640, 480);

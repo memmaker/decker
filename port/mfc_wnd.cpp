@@ -1125,7 +1125,7 @@ public:
 		// the key shown after a tab selects the entry, as in the game itself
 		for (auto &it : m_menu->m_items) {
 			int tab = it.text.Find('\t');
-			if (it.id && tab >= 0 && it.text.GetLength() == tab + 2 && it.text[tab + 1] == (char)ch) { m_result = it.id; m_done = TRUE; return TRUE; }
+			if (it.id && tab >= 0 && it.text.GetLength() == tab + 2 && toupper((unsigned char)it.text[tab + 1]) == toupper((int)ch)) { m_result = it.id; m_done = TRUE; return TRUE; }
 		}
 		return TRUE;
 	}
