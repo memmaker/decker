@@ -44,9 +44,12 @@ int GetSystemMetrics(int i)
 	}
 	return 0; // no frames or captions around the game's own windows
 }
+// modifiers of the key event being handled (SDL's live state may already
+// be past a Ctrl release when several key events arrive at once)
+static int g_evMods = -1;
 short GetKeyState(int vk)
 {
-	SDL_Keymod m = SDL_GetModState();
+	SDL_Keymod m = g_evMods >= 0 ? (SDL_Keymod)g_evMods : SDL_GetModState();
 	if (vk == VK_CONTROL) return (m & (KMOD_CTRL | KMOD_GUI)) ? (short)0x8000 : 0;
 	if (vk == VK_SHIFT) return (m & KMOD_SHIFT) ? (short)0x8000 : 0;
 	if (vk == VK_MENU) return (m & KMOD_ALT) ? (short)0x8000 : 0;
@@ -253,7 +256,9 @@ void PumpEvents(BOOL wait)
 				if (top && g_modal.empty() && port_key(top, vk, mods)) break;
 				if (!g_modal.empty() && port_key(g_modal.back(), vk, mods)) break;
 			}
+			g_evMods = e.key.keysym.mod;
 			HandleKey(vk, e.type == SDL_KEYDOWN, mods);
+			g_evMods = -1;
 			// Ctrl+letter and Return/Escape/Backspace produce no SDL text event
 			break;
 		}

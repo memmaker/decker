@@ -19,24 +19,29 @@ topics = []       # [id, title, html]
 cur = None
 fn_text = ''
 link_text = ''
+hid = ''
 para = ''
 
 def emit(t):
-	global para, link_text, fn_text
+	global para, link_text, fn_text, hid
 	if state['skip']: return
 	if state['fn'] is not None: fn_text += t; return
 	if state['v']:
-		if link_text:
-			para += '<a href="#%s">%s</a>' % (html.escape(t.strip()), html.escape(link_text))
-			link_text = ''
+		if link_text: hid += t    # jump target, may come in several groups
 		return
-	if state['ul']: link_text += t; return
+	if state['ul']:
+		if hid: flush_link()
+		link_text += t; return
 	flush_link()
 	para += html.escape(t)
 
 def flush_link():
-	global link_text, para
-	if link_text: para += html.escape(link_text); link_text = ''
+	global link_text, para, hid
+	if link_text and hid:
+		para += '\0%s\1%s\2' % (hid.strip(), html.escape(link_text))
+	elif link_text:
+		para += html.escape(link_text)
+	link_text = hid = ''
 
 def end_para():
 	global para
@@ -98,6 +103,18 @@ topics.append(['rvip', 'Added in this version (keys)', [
 	'stood on yet; stops when ICE is present, on any message or any key.</li>'
 	'<li>Numeric keypad 8/6/2/4 moves, 5 waits.</li>'
 	'<li>There are no stairs and no item inventory in Decker, so the usual stair-walking and item menus do not apply.</li></ul>']])
+ids = {t[0].lower(): t[0] for t in topics}
+def link(m):
+	target, text = m.group(1), m.group(2)
+	if 'EF(' in target:   # WinHelp ExecFile macro: a web address or mail link
+		plain = html.unescape(text)
+		href = 'mailto:' + plain if '@' in plain else plain if '://' in plain else 'https://' + plain
+		return '<a href="%s">%s</a>' % (html.escape(href), text)
+	t = ids.get(target.lower())
+	if not t: print('unresolved jump:', target, file=sys.stderr)
+	return '<a href="#%s">%s</a>' % (html.escape(t), text) if t else text
+for t in topics:
+	t[2] = [re.sub('\0(.*?)\1(.*?)\2', link, x) for x in t[2]]
 toc = ''.join('<li><a href="#%s">%s</a></li>' % (html.escape(t[0]), html.escape(t[1] or t[0])) for t in topics)
 # numeric anchors for the WinHelp(HID_*) context ids the game passes to port_help()
 hm = dict(re.findall(r'#define\s+(\w+)\s+(\d+)', open(os.path.join(os.path.dirname(src), '..', 'Decker.hm')).read()))
