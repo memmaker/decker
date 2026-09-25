@@ -154,8 +154,21 @@ void CMessageView::AddMessage(const char *szStr, COLORREF crColor)
 	CMessage *pMessage;
 	BOOL bResize;
 
+	// RVIP: a repeat of the newest message becomes "message (xN)"
+	static int nReps = 1;
+	BOOL bRepeat = !m_olMessageList.IsEmpty() && m_szLast == szStr;
 	m_nAdded++;
 	m_szLast = szStr;
+	if (bRepeat)
+	{
+		pMessage = (CMessage *)m_olMessageList.GetTail();
+		pMessage->m_szText.Format("%s (x%d)", szStr, ++nReps);
+		RedoSize();
+		ScrollToBottom();
+		RedrawWindow();
+		return;
+	}
+	nReps = 1;
 
 	// See if we are at the message limit
 	if (m_olMessageList.GetCount() == MAX_MESSAGES)
