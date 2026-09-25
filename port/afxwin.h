@@ -1017,7 +1017,8 @@ public:
 	afx_msg void OnSysCommand(UINT id, LPARAM);
 
 	// API
-	CWnd *GetParent() const { return m_parent; }
+	CWnd *m_owner = nullptr;      // dialogs: the window that was active when they opened
+	CWnd *GetParent() const { return m_parent ? m_parent : m_owner; }
 	CWnd *GetTopLevel();
 	CWnd *GetDlgItem(int id) const;
 	int GetDlgCtrlID() const { return m_nID; }

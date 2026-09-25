@@ -8,12 +8,19 @@ CXXFLAGS += -std=c++17 -O2 -g -Iport -I. $(SDL_CFLAGS) -fno-delete-null-pointer-
 	-Wno-undefined-bool-conversion -Wno-null-conversion -Wno-pointer-bool-conversion
 GAME := $(filter-out StdAfx.cpp,$(wildcard *.cpp))
 PORT := port/mfc_core.cpp port/mfc_wnd.cpp port/mfc_ctl.cpp port/fe_sdl.cpp port/res_gen.cpp port/rvip.cpp
-OBJ := $(patsubst %.cpp,obj/%.o,$(GAME) $(PORT))
+# make O=<dir> OUT=<file> SAN=address  -> sanitizer build outside the tree
+O ?= obj
+OUT ?= decker
+ifdef SAN
+CXXFLAGS += -fsanitize=$(SAN) -fno-omit-frame-pointer -O1
+LDFLAGS += -fsanitize=$(SAN)
+endif
+OBJ := $(patsubst %.cpp,$(O)/%.o,$(GAME) $(PORT))
 
-decker: $(OBJ)
+$(OUT): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJ) $(SDL_LIBS) $(LDFLAGS)
 
-obj/%.o: %.cpp port/afxwin.h port/font_gen.h port/res.h
+$(O)/%.o: %.cpp port/afxwin.h port/font_gen.h port/res.h
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 

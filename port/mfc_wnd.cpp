@@ -189,7 +189,13 @@ BOOL CWnd::CreateEx(DWORD exStyle, LPCTSTR, LPCTSTR name, DWORD style, int x, in
 BOOL CWnd::DestroyWindow()
 {
 	if (!m_hWnd) return FALSE;
-	SendMessage(WM_DESTROY);
+	// a window whose modal dialog is still on the stack (OptionsDlg Quit closes
+	// the Matrix view from inside OnOptions) goes once the modal has returned
+	if (!m_parent) for (CWnd *d : g_modal) if (d->m_owner == this) { PostMessage(WM_CLOSE); return TRUE; }
+	// Unlink everything first: a WM_DESTROY handler may `delete this`
+	// (CMatrixView does), so `this` is not touched after it runs.
+	// Children go first (Windows sends WM_DESTROY to the parent first;
+	// no Decker child handles it).
 	while (!m_children.empty()) {
 		CWnd *c = m_children.back();
 		c->DestroyWindow();
@@ -208,9 +214,8 @@ BOOL CWnd::DestroyWindow()
 	m_backing = nullptr;
 	m_hWnd = nullptr;
 	m_parent = nullptr;
-	BOOL wasMain = AfxGetApp() && AfxGetApp()->m_pMainWnd == this;
-	PostNcDestroy();
-	if (wasMain) { AfxGetApp()->m_pMainWnd = nullptr; g_quit = TRUE; }
+	if (AfxGetApp() && AfxGetApp()->m_pMainWnd == this) { AfxGetApp()->m_pMainWnd = nullptr; g_quit = TRUE; }
+	WindowProc(WM_DESTROY, 0, 0);
 	return TRUE;
 }
 
@@ -629,7 +634,8 @@ void HandleChar(UINT ch)
 }
 void DispatchPosted()
 {
-	while (!g_posted.empty()) {
+	// only what was queued before: a handler may post again (a deferred close)
+	for (size_t n = g_posted.size(); n-- && !g_posted.empty();) {
 		Posted p = g_posted.front();
 		g_posted.pop_front();
 		if (p.msg == WM_QUIT) { g_quit = TRUE; continue; }
@@ -732,6 +738,7 @@ INT_PTR CDialog::DoModal()
 	if (!t) return -1;
 	CWnd *oldFocus = g_focus;
 	g_capture = nullptr; // a modal window takes the mouse (the click that opened it may still be down)
+	m_owner = m_pParentWnd ? m_pParentWnd->GetTopLevel() : CWnd::GetActiveWindow();
 	m_bModalDone = FALSE;
 	m_nModalResult = -1;
 	if (!CreateFromTemplate(t, m_pParentWnd)) return -1;
