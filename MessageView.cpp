@@ -57,6 +57,7 @@ CMessageView::CMessageView()
 	m_popup_menu.LoadMenu(IDR_MESSAGEVIEW_POPUP);
 	m_dx = 10;
 	m_dy = 10;
+	m_nAdded = 0;
 }
 
 CMessageView::~CMessageView()
@@ -152,6 +153,9 @@ void CMessageView::AddMessage(const char *szStr, COLORREF crColor)
 {
 	CMessage *pMessage;
 	BOOL bResize;
+
+	m_nAdded++;
+	m_szLast = szStr;
 
 	// See if we are at the message limit
 	if (m_olMessageList.GetCount() == MAX_MESSAGES)

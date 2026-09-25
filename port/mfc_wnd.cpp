@@ -1130,7 +1130,7 @@ BOOL CMenu::LoadMenu(UINT id)
 		if ((UINT)m->menu == id) m_sub->m_items.push_back({m->text, (UINT)m->id});
 	return TRUE;
 }
-BOOL CMenu::TrackPopupMenu(UINT, int x, int y, CWnd *owner, LPCRECT)
+BOOL CMenu::TrackPopupMenu(UINT flags, int x, int y, CWnd *owner, LPCRECT)
 {
 	CPopupWnd p;
 	p.m_menu = this;
@@ -1166,6 +1166,7 @@ BOOL CMenu::TrackPopupMenu(UINT, int x, int y, CWnd *owner, LPCRECT)
 	p.DestroyWindow();
 	for (CWnd *t : g_topLevel) t->Invalidate();
 	if (oldFocus && Alive(oldFocus)) g_focus = oldFocus;
+	if (flags & TPM_RETURNCMD) return p.m_result;
 	if (p.m_result && owner && owner->m_hWnd) owner->SendMessage(WM_COMMAND, p.m_result, 0);
 	return p.m_result != 0;
 }

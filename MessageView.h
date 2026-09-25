@@ -71,6 +71,10 @@ protected:
 public:
 	void OnClear();
 	void AddMessage(const char *szStr, COLORREF crColor);
+
+	// RVIP: auto-explore stops on new messages
+	int m_nAdded;
+	CString m_szLast;
 };
 
 /////////////////////////////////////////////////////////////////////////////

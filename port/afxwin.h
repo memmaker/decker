@@ -397,6 +397,7 @@ public:
 
 #define TPM_LEFTALIGN 0x0
 #define TPM_RIGHTBUTTON 0x2
+#define TPM_RETURNCMD 0x100
 #define MF_STRING 0x0
 #define MF_BYCOMMAND 0x0
 #define MF_GRAYED 0x1
@@ -1465,6 +1466,8 @@ void HandleChar(UINT ch);
 void HandleMouse(UINT msg, int x, int y);
 void HandleWheel(int x, int y, int dy);
 extern int g_mouseX, g_mouseY;
+extern BOOL g_swallowInput; // auto-explore: keys and clicks only count
+extern int g_inputCount;
 int TextWidth(int font, const char *s, int n);
 int FontHeight(int font);
 void DrawText(CDC &dc, int font, int x, int y, const char *s, int n, COLORREF c);

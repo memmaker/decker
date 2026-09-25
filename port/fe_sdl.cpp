@@ -26,6 +26,10 @@ static Bitmap g_screen(640, 480);
 static SDL_AudioDeviceID g_audio;
 static SDL_AudioSpec g_have;
 int g_soundOn = 1; // page toggle on the web (off by default there)
+namespace shim {
+BOOL g_swallowInput = FALSE;
+int g_inputCount = 0;
+}
 
 // ---------------------------------------------------------------- misc Win32
 DWORD GetTickCount() { return SDL_GetTicks(); }
@@ -200,6 +204,7 @@ static void TestHook()
 	sscanf(l.c_str(), "%31s %n", cmd, &x);
 	fprintf(stderr, "test: %s\n", l.c_str());
 	strncpy(arg, l.c_str() + std::min((size_t)x, l.size()), sizeof arg - 1);
+	if (g_swallowInput && strcmp(cmd, "shot")) { g_inputCount++; return; }
 	if (!strcmp(cmd, "key")) { UINT vk = strtoul(arg, nullptr, 0); if (!(port_key(CWnd::GetActiveWindow(), vk, 0) && g_modal.empty())) { HandleKey(vk, TRUE, 0); HandleKey(vk, FALSE, 0); } }
 	else if (!strcmp(cmd, "char")) for (char *c = arg; *c; c++) HandleChar((unsigned char)*c);
 	else if (!strcmp(cmd, "click") || !strcmp(cmd, "dbl") || !strcmp(cmd, "rclick")) {
@@ -230,6 +235,11 @@ void PumpEvents(BOOL wait)
 		got = SDL_PollEvent(&e);
 	}
 	while (got) {
+		if (g_swallowInput && e.type != SDL_QUIT && e.type != SDL_WINDOWEVENT) {
+			if (e.type == SDL_KEYDOWN || e.type == SDL_MOUSEBUTTONDOWN) g_inputCount++;
+			got = SDL_PollEvent(&e);
+			continue;
+		}
 		switch (e.type) {
 		case SDL_QUIT: g_quit = TRUE; break;
 		case SDL_KEYDOWN:
