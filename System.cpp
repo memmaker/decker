@@ -654,7 +654,7 @@ void CSystem::MarkContractNodes(CMatrixView *pView)
 				pNode->m_bMapped = TRUE;
 				pNode->m_nSpecialImage = NSI_DS_QUEST;
 
-				szStr.Format("Contract Node: Area %d Node %s", pNode->m_pParentArea->m_nAreaNumber, pNode->m_szName);
+				szStr.Format("Contract Node: Area %d Node %s", pNode->m_pParentArea->m_nAreaNumber, (LPCTSTR)(pNode->m_szName));
 				pView->m_MessageView.AddMessage(szStr, BLUE);
 			}
 		}
@@ -675,7 +675,7 @@ void CSystem::MarkContractNodes(CMatrixView *pView)
 				pNode->m_bMapped = TRUE;
 				pNode->m_nSpecialImage = NSI_IO_QUEST;
 
-				szStr.Format("Contract Node: Area %d Node %s", pNode->m_pParentArea->m_nAreaNumber, pNode->m_szName);
+				szStr.Format("Contract Node: Area %d Node %s", pNode->m_pParentArea->m_nAreaNumber, (LPCTSTR)(pNode->m_szName));
 				pView->m_MessageView.AddMessage(szStr, BLUE);
 			}
 		}

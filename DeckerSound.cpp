@@ -172,7 +172,7 @@ void PlayGameSound(int nSound)
 	}
 
 	// Play the sound file
-	szSound.Format("%s%s",g_szSoundDirectory,g_SoundWavs.GetAt(nSound));
+	szSound.Format("%s%s",g_szSoundDirectory,(LPCTSTR)(g_SoundWavs.GetAt(nSound)));
 	PlaySound(szSound, NULL,SND_ASYNC|SND_FILENAME/*|SND_NOWAIT*/);
 }
 

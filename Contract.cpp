@@ -330,43 +330,43 @@ void CContract::GetDescriptiveText(CString &szText)
 	{
 	case CONT_STEAL:
 		szText.Format("A client needs access to %s from the %s system. You must recover a copy of this data.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_STEAL_ERASE:
 		szText.Format("A client desires sole access to %s from the %s system. You must recover a copy of this data and erase it from the system.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_ERASE:
 		szText.Format("A client wishes to destroy %s located on the %s system. You must locate this data and erase it from the system.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_EDIT:
 		szText.Format("A client wishes to alter %s located on the %s system. You must locate this data in the system and edit it to the client's specifications.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_DEACTIVATE_IO:
 		szText.Format("A client wishes to deactivate %s from the %s system. You must locate the I/O node controlling this and deactivate it.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_ACTIVATE_IO:
 		szText.Format("A client wishes to activate %s from the %s system. You must locate the I/O node controlling this and activate it.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_SABOTAGE_IO:
 		szText.Format("A client wishes to sabotage %s at the %s system. You must locate the I/O node controlling this and sabotage it.",
-			g_szTargetObjectText[m_nTargetObject], m_szSystemName);
+			g_szTargetObjectText[m_nTargetObject], (LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_CRASH_SYS:
 		szText.Format("A client wishes to crash the %s system. You must locate the CPU for the system and initiate a system failure.",
-			m_szSystemName);
+			(LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_BACKDOOR:
 		szText.Format("A client wishes for a backdoor to be created into the %s system. You must locate the CPU for the system and create this back door. The client's decker will take care of the rest.",
-			m_szSystemName);
+			(LPCTSTR)(m_szSystemName));
 		break;
 	case CONT_RUN_PROGRAM:
 		szText.Format("A client needs a special program activated on the %s system. Locate the target node(s) by running the program, then activate the program within the node. You must remain in the node until the program finishes running.",
-			m_szSystemName);
+			(LPCTSTR)(m_szSystemName));
 		break;
 	}
 
@@ -803,11 +803,11 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				if (pFile->m_nState & STATE_EDITED_D)
 				{
 					bFailed = TRUE;
-					szTxt.Format("(F) File %s was edited before download, making it useless.\n",pFile->m_szName);
+					szTxt.Format("(F) File %s was edited before download, making it useless.\n",(LPCTSTR)(pFile->m_szName));
 				}
 				else
 				{
-					szTxt.Format("(C) File %s was downloaded.\n",pFile->m_szName);
+					szTxt.Format("(C) File %s was downloaded.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 			else
@@ -817,7 +817,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				{
 					if (pFile->m_nState & STATE_SCAN)
 					{
-						szTxt.Format("(I) File %s has not been downloaded.\n",pFile->m_szName);
+						szTxt.Format("(I) File %s has not been downloaded.\n",(LPCTSTR)(pFile->m_szName));
 					}
 					else
 					{
@@ -826,7 +826,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				}
 				else
 				{
-					szTxt.Format("(I) File %s was not downloaded.\n",pFile->m_szName);
+					szTxt.Format("(I) File %s was not downloaded.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 
@@ -852,11 +852,11 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				if (pFile->m_nState & STATE_EDITED_D)
 				{
 					bFailed = TRUE;
-					szTxt.Format("(F) File %s was edited before download, making it useless.\n",pFile->m_szName);
+					szTxt.Format("(F) File %s was edited before download, making it useless.\n",(LPCTSTR)(pFile->m_szName));
 				}
 				else
 				{
-					szTxt.Format("(C) File %s was successfully downloaded.\n",pFile->m_szName);
+					szTxt.Format("(C) File %s was successfully downloaded.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 			else
@@ -866,7 +866,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				{
 					if (pFile->m_nState & STATE_SCAN)
 					{
-						szTxt.Format("(I) File %s has not been downloaded.\n",pFile->m_szName);
+						szTxt.Format("(I) File %s has not been downloaded.\n",(LPCTSTR)(pFile->m_szName));
 					}
 					else
 					{
@@ -875,7 +875,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				}
 				else
 				{
-					szTxt.Format("(I) File %s was not downloaded.\n",pFile->m_szName);
+					szTxt.Format("(I) File %s was not downloaded.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 			szBreakdown += szTxt;
@@ -888,7 +888,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				{
 					if (pFile->m_nState & STATE_SCAN)
 					{
-						szTxt.Format("(I) File %s has not been erased.\n",pFile->m_szName);
+						szTxt.Format("(I) File %s has not been erased.\n",(LPCTSTR)(pFile->m_szName));
 					}
 					else
 					{
@@ -897,12 +897,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				}
 				else
 				{
-					szTxt.Format("(I) File %s was not erased.\n",pFile->m_szName);
+					szTxt.Format("(I) File %s was not erased.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 			else
 			{
-				szTxt.Format("(C) Mission file %s was erased.\n",pFile->m_szName);
+				szTxt.Format("(C) Mission file %s was erased.\n",(LPCTSTR)(pFile->m_szName));
 			}
 
 			szBreakdown += szTxt;
@@ -928,7 +928,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				{
 					if (pFile->m_nState & STATE_SCAN)
 					{
-						szTxt.Format("(I) File %s has not been erased.\n",pFile->m_szName);
+						szTxt.Format("(I) File %s has not been erased.\n",(LPCTSTR)(pFile->m_szName));
 					}
 					else
 					{
@@ -937,12 +937,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				}
 				else
 				{
-					szTxt.Format("(I) File %s was not erased.\n",pFile->m_szName);
+					szTxt.Format("(I) File %s was not erased.\n",(LPCTSTR)(pFile->m_szName));
 				}
 			}
 			else
 			{
-				szTxt.Format("(C) Mission file %s was erased.\n",pFile->m_szName);
+				szTxt.Format("(C) Mission file %s was erased.\n",(LPCTSTR)(pFile->m_szName));
 			}
 
 			szBreakdown += szTxt;
@@ -966,7 +966,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 				// Was it edited
 				if (pFile->m_nState & STATE_EDITED_N)
 				{
-					szTxt.Format("(C) File %s was edited.\n",pFile->m_szName);
+					szTxt.Format("(C) File %s was edited.\n",(LPCTSTR)(pFile->m_szName));
 				}
 				else
 				{
@@ -975,7 +975,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					{
 						if (pFile->m_nState & STATE_SCAN)
 						{
-							szTxt.Format("(I) File %s has not been edited.\n",pFile->m_szName);
+							szTxt.Format("(I) File %s has not been edited.\n",(LPCTSTR)(pFile->m_szName));
 						}
 						else
 						{
@@ -984,14 +984,14 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					}
 					else
 					{
-						szTxt.Format("(I) File %s was not edited.\n",pFile->m_szName);
+						szTxt.Format("(I) File %s was not edited.\n",(LPCTSTR)(pFile->m_szName));
 					}
 				}
 			}
 			else
 			{
 				bFailed = TRUE;
-				szTxt.Format("(F)File %s was erased.\n",pFile->m_szName);
+				szTxt.Format("(F)File %s was erased.\n",(LPCTSTR)(pFile->m_szName));
 			}
 
 			szBreakdown += szTxt;
@@ -1011,7 +1011,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 
 			if (pNode->m_bActivated)
 			{
-				szTxt.Format("(C) IO node %s was deactivated\n", pNode->m_szName);
+				szTxt.Format("(C) IO node %s was deactivated\n", (LPCTSTR)(pNode->m_szName));
 			}
 			else
 			{
@@ -1024,12 +1024,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					}
 					else
 					{
-						szTxt.Format("(I) IO node %s has not been deactivated\n", pNode->m_szName);
+						szTxt.Format("(I) IO node %s has not been deactivated\n", (LPCTSTR)(pNode->m_szName));
 					}
 				}
 				else
 				{
-					szTxt.Format("(I) IO node %s was not deactivated\n", pNode->m_szName);
+					szTxt.Format("(I) IO node %s was not deactivated\n", (LPCTSTR)(pNode->m_szName));
 				}
 			}
 
@@ -1050,7 +1050,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 
 			if (pNode->m_bActivated)
 			{
-				szTxt.Format("(C) IO node %s was activated\n", pNode->m_szName);
+				szTxt.Format("(C) IO node %s was activated\n", (LPCTSTR)(pNode->m_szName));
 			}
 			else
 			{
@@ -1063,12 +1063,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					}
 					else
 					{
-						szTxt.Format("(I) IO node %s has not been activated\n", pNode->m_szName);
+						szTxt.Format("(I) IO node %s has not been activated\n", (LPCTSTR)(pNode->m_szName));
 					}
 				}
 				else
 				{
-					szTxt.Format("(I) IO node %s was not activated\n", pNode->m_szName);
+					szTxt.Format("(I) IO node %s was not activated\n", (LPCTSTR)(pNode->m_szName));
 				}
 			}
 
@@ -1089,7 +1089,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 
 			if (pNode->m_bActivated)
 			{
-				szTxt.Format("(C) IO node %s was sabotaged\n", pNode->m_szName);
+				szTxt.Format("(C) IO node %s was sabotaged\n", (LPCTSTR)(pNode->m_szName));
 			}
 			else
 			{
@@ -1102,12 +1102,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					}
 					else
 					{
-						szTxt.Format("(I) IO node %s has not been sabotaged\n", pNode->m_szName);
+						szTxt.Format("(I) IO node %s has not been sabotaged\n", (LPCTSTR)(pNode->m_szName));
 					}
 				}
 				else
 				{
-					szTxt.Format("(I) IO node %s was not sabotaged\n", pNode->m_szName);
+					szTxt.Format("(I) IO node %s was not sabotaged\n", (LPCTSTR)(pNode->m_szName));
 				}
 			}
 
@@ -1175,7 +1175,7 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 
 			if (pNode->m_bActivated)
 			{
-				szTxt.Format("(C) Program was successfully run in node %s\n", pNode->m_szName);
+				szTxt.Format("(C) Program was successfully run in node %s\n", (LPCTSTR)(pNode->m_szName));
 			}
 			else
 			{
@@ -1188,12 +1188,12 @@ int GetContractStatus(CString &szOverall, CString &szBreakdown, BOOL bInProgress
 					}
 					else
 					{
-						szTxt.Format("(I) Program has not been run in node %s\n", pNode->m_szName);
+						szTxt.Format("(I) Program has not been run in node %s\n", (LPCTSTR)(pNode->m_szName));
 					}
 				}
 				else
 				{
-					szTxt.Format("(I) Program was not run in node %s\n", pNode->m_szName);
+					szTxt.Format("(I) Program was not run in node %s\n", (LPCTSTR)(pNode->m_szName));
 				}
 			}
 

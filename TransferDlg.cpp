@@ -135,7 +135,7 @@ BOOL CTransferDlg::OnInitDialog()
 		m_Item_List.SetItemText(i,4,szTmp);
 
 		// Save a pointer to the program
-		m_Item_List.SetItemData(i,(DWORD)pProgram);
+		m_Item_List.SetItemData(i,(DWORD_PTR)pProgram);
 
 		i++;
 	}

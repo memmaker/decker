@@ -720,7 +720,7 @@ void CMatrixView::Initialize()
 		}
 		m_SoftwareView.SetItemText(iIndex,1,szText);
 
-		m_SoftwareView.SetItemData(iIndex,(DWORD)pProgram);
+		m_SoftwareView.SetItemData(iIndex,(DWORD_PTR)pProgram);
 
 		iIndex++;
 	}
@@ -996,7 +996,7 @@ void CMatrixView::DoMove(int nDir)
 					if (DoRunProgramVsIce(g_pChar->m_pActiveHide, pIce))
 					{
 						// Hide succeeded. Print out a message saying so
-						szTxt.Format("%s was successfully bypassed by the %s program.", pIce->m_szName, g_pChar->m_pActiveHide->m_szName);
+						szTxt.Format("%s was successfully bypassed by the %s program.", (LPCTSTR)(pIce->m_szName), (LPCTSTR)(g_pChar->m_pActiveHide->m_szName));
 						m_MessageView.AddMessage(szTxt, BLACK);
 
 						// Continue on to move code below.
@@ -1004,7 +1004,7 @@ void CMatrixView::DoMove(int nDir)
 					}
 
 					// We failed. Print out a message saying so
-					szTxt.Format("%s was not fooled by %s program.", pIce->m_szName, g_pChar->m_pActiveHide->m_szName);
+					szTxt.Format("%s was not fooled by %s program.", (LPCTSTR)(pIce->m_szName), (LPCTSTR)(g_pChar->m_pActiveHide->m_szName));
 					m_MessageView.AddMessage(szTxt, BLACK);
 
 					pIce->m_bWasAccessed = TRUE;
@@ -1012,7 +1012,7 @@ void CMatrixView::DoMove(int nDir)
 				else
 				{
 					// Put out a message and mark the ice as needing to query
-					szTxt.Format("%s blocks you passage.", pIce->m_szName);
+					szTxt.Format("%s blocks you passage.", (LPCTSTR)(pIce->m_szName));
 					m_MessageView.AddMessage(szTxt, BLACK);
 				}
 
@@ -1783,7 +1783,7 @@ void CMatrixView::DoEnterNode(CNode *pNode, int nDirFrom)
 	UpdateNodeAccessButtons();
 
 	// Output a message
-	szTmp.Format("Entering node %s.", pNode->m_szName);
+	szTmp.Format("Entering node %s.", (LPCTSTR)(pNode->m_szName));
 	m_MessageView.AddMessage(szTmp, BLACK);
 
 	// Show the node name
@@ -1846,7 +1846,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Print out a message saying so
-			szTxt.Format("%s program does %d%% damage to %s.",pProgram->m_szName, (iDamage*5), pIce->m_szName);
+			szTxt.Format("%s program does %d%% damage to %s.",(LPCTSTR)(pProgram->m_szName), (iDamage*5), (LPCTSTR)(pIce->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			
 			// Draw the damage
@@ -1862,7 +1862,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program missed.",pProgram->m_szName);
+			szTxt.Format("%s program missed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 
@@ -1930,7 +1930,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 				PlayGameSound(pProgram->m_nSound);
 
 				// Print out a message saying so
-				szTxt.Format("%s program does %d%% damage to %s.",pProgram->m_szName, (iDamage*5), pTmpIce->m_szName);
+				szTxt.Format("%s program does %d%% damage to %s.",(LPCTSTR)(pProgram->m_szName), (iDamage*5), (LPCTSTR)(pTmpIce->m_szName));
 				m_MessageView.AddMessage(szTxt, BLACK);
 
 				// Draw the damage
@@ -1946,7 +1946,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			else
 			{
 				// We missed. Print out a message saying so
-				szTxt.Format("%s program missed.",pProgram->m_szName);
+				szTxt.Format("%s program missed.",(LPCTSTR)(pProgram->m_szName));
 				m_MessageView.AddMessage(szTxt, BLACK);
 			}
 
@@ -2008,7 +2008,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Print out a message saying so
-			szTxt.Format("%s program does %d%% damage to %s.",pProgram->m_szName, (iDamage*5), pIce->m_szName);
+			szTxt.Format("%s program does %d%% damage to %s.",(LPCTSTR)(pProgram->m_szName), (iDamage*5), (LPCTSTR)(pIce->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			// Draw the damage
@@ -2024,7 +2024,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program missed.",pProgram->m_szName);
+			szTxt.Format("%s program missed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 
@@ -2059,7 +2059,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 				PlayGameSound(pProgram->m_nSound);
 
 				// Success. Print out a message saying so
-				szTxt.Format("%s program succeeds. %s is slowed for %d turns.",pProgram->m_szName, pIce->m_szName, iSuccess);
+				szTxt.Format("%s program succeeds. %s is slowed for %d turns.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName), iSuccess);
 				m_MessageView.AddMessage(szTxt, BLACK);
 
 				// Add one to the slow level because it is reduced at the first of the turn
@@ -2074,7 +2074,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			else
 			{
 				// We missed. Print out a message saying so
-				szTxt.Format("%s is unaffected by %s.",pIce->m_szName, pProgram->m_szName);
+				szTxt.Format("%s is unaffected by %s.",(LPCTSTR)(pIce->m_szName), (LPCTSTR)(pProgram->m_szName));
 				m_MessageView.AddMessage(szTxt, BLACK);
 			}
 
@@ -2105,7 +2105,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %s is infected for %d turns.",pProgram->m_szName, pIce->m_szName, iSuccess);
+			szTxt.Format("%s program succeeds. %s is infected for %d turns.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName), iSuccess);
 			m_MessageView.AddMessage(szTxt, BLACK);
 			
 			// Add one to the virus level because it is reduced at the first of the turn
@@ -2120,7 +2120,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 
@@ -2168,7 +2168,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %s is confused for %d turns.",pProgram->m_szName, pIce->m_szName, iSuccess);
+			szTxt.Format("%s program succeeds. %s is confused for %d turns.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName), iSuccess);
 			m_MessageView.AddMessage(szTxt, BLACK);
 			
 			// Add one to the confusion level because it is reduced at the first of the turn
@@ -2183,7 +2183,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 
@@ -2217,7 +2217,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %s is weakened for %d turns.",pProgram->m_szName, pIce->m_szName, iSuccess);
+			szTxt.Format("%s program succeeds. %s is weakened for %d turns.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName), iSuccess);
 			m_MessageView.AddMessage(szTxt, BLACK);
 			
 			// Add one to the weaken level because it is reduced at the first of the turn
@@ -2232,7 +2232,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 
@@ -2280,7 +2280,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		// If the ICE is hostile, it automatically fails
 		if (pIce->m_nState & STATE_MASK_HOSTILE)
 		{
-			szTxt.Format("%s already knows you are hostile. Program  %s has no effect.", pIce->m_szName ,pProgram->m_szName);
+			szTxt.Format("%s already knows you are hostile. Program  %s has no effect.", (LPCTSTR)(pIce->m_szName) ,(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 			return FALSE;
 		}
@@ -2302,7 +2302,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %s is deceived.",pProgram->m_szName, pIce->m_szName);
+			szTxt.Format("%s program succeeds. %s is deceived.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			m_NodeView.DrawBypass(pIce);
@@ -2338,7 +2338,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed. %s was not deceived.",pProgram->m_szName, pIce->m_szName);
+			szTxt.Format("%s program failed. %s was not deceived.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			// Trigger an alert - only if the ice is not in the query state. If it is in 
@@ -2376,7 +2376,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds.",pProgram->m_szName);
+			szTxt.Format("%s program succeeds.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			
 			// Remove the trace
@@ -2387,7 +2387,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		break;
@@ -2410,7 +2410,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s analyzed (%d%%)", pIce->m_szName, iSuccess*20);
+			szTxt.Format("%s analyzed (%d%%)", (LPCTSTR)(pIce->m_szName), iSuccess*20);
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			//FSO 8-7-01
@@ -2422,7 +2422,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			return FALSE;
@@ -2433,7 +2433,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		// Make sure this is a tapeworm (should have already been done)
 		if (pIce->m_nType!=ICE_TAPEWORM)
 		{
-			szTxt.Format("%s program only works against tapeworms.", pProgram->m_szName);
+			szTxt.Format("%s program only works against tapeworms.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			return FALSE;
 		}
@@ -2456,7 +2456,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %s decrypted.",pProgram->m_szName, pIce->m_szName);
+			szTxt.Format("%s program succeeds. %s decrypted.",(LPCTSTR)(pProgram->m_szName), (LPCTSTR)(pIce->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			DoCrashIce(pIce);
@@ -2466,7 +2466,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			// Make a second roll versus stealth to see if the ice noticed it
@@ -2477,7 +2477,7 @@ BOOL CMatrixView::DoRunProgramVsIce(CProgram *pProgram, CIce *pIce)
 
 			if (iSuccess<=0)
 			{
-				szTxt.Format("%s noticed the decrypt attempt!.", pIce->m_szName); //FSO 6-26-01 Bug fix
+				szTxt.Format("%s noticed the decrypt attempt!.", (LPCTSTR)(pIce->m_szName)); //FSO 6-26-01 Bug fix
 				m_MessageView.AddMessage(szTxt, RED);
 
 				// Need to mark all ice as hostile
@@ -2544,7 +2544,7 @@ void CMatrixView::DoSetAlert(CIce *pIce, int nAlertLevel)
 		// Send a message
 		if (pIce!=NULL)
 		{
-			szTxt.Format("%s in node %s signals a yellow alert.", pIce->m_szName, pIce->m_pCurrentNode->m_szName);
+			szTxt.Format("%s in node %s signals a yellow alert.", (LPCTSTR)(pIce->m_szName), (LPCTSTR)(pIce->m_pCurrentNode->m_szName));
 			m_MessageView.AddMessage(szTxt, ORANGE);
 		}
 	}
@@ -2560,7 +2560,7 @@ void CMatrixView::DoSetAlert(CIce *pIce, int nAlertLevel)
 		// Send a message
 		if (pIce!=NULL)
 		{
-			szTxt.Format("%s in node %s signals a red alert!", pIce->m_szName, pIce->m_pCurrentNode->m_szName);
+			szTxt.Format("%s in node %s signals a red alert!", (LPCTSTR)(pIce->m_szName), (LPCTSTR)(pIce->m_pCurrentNode->m_szName));
 			m_MessageView.AddMessage(szTxt, RED);
 		}
 
@@ -2627,7 +2627,7 @@ void CMatrixView::DoCrashIce(CIce *pIce)
 			PlayGameSound(SOUND_ICECRASH);
 		}
 
-		szTxt.Format("%s has crashed!", pIce->m_szName);
+		szTxt.Format("%s has crashed!", (LPCTSTR)(pIce->m_szName));
 		m_MessageView.AddMessage(szTxt, DK_BLUE);
 
 		// Erase the ice from the node view
@@ -2692,7 +2692,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// Just make sure we have a target ice
 		if (g_pChar->m_pTargettedIce == NULL)
 		{
-			szTxt.Format("%s cannot run without a target selected.", pProgram->m_szName);
+			szTxt.Format("%s cannot run without a target selected.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			return;
 		}
@@ -2709,7 +2709,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		if (g_pChar->m_pTraceIce == NULL)
 		{
 			// No trace active
-			szTxt.Format("%s cannot run without an active trace.", pProgram->m_szName);
+			szTxt.Format("%s cannot run without an active trace.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			return;
 		}
@@ -2724,7 +2724,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// Just make sure we have a target ice
 		if (g_pChar->m_pTargettedIce == NULL)
 		{
-			szTxt.Format("%s cannot run without a target selected.", pProgram->m_szName);
+			szTxt.Format("%s cannot run without a target selected.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			return;
 		}
@@ -2753,7 +2753,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// See if this is the active shield
 		if (pProgram == g_pChar->m_pActiveShield)
 		{
-			szTxt.Format("%s already active.", pProgram->m_szName);
+			szTxt.Format("%s already active.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -2781,7 +2781,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			//m_SoftwareView.SetItemState(nIndex, pProgram->m_nClass + NUM_PROGRAMS, LVIF_IMAGE);
 			m_SoftwareView.SetItem(nIndex, 0, LVIF_IMAGE, NULL, pProgram->m_nClass + NUM_PROGRAMS, 0, 0, 0);
 
-			szTxt.Format("%s activated.", pProgram->m_szName);
+			szTxt.Format("%s activated.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 
 			// Show the 'Shield Active' symbol
@@ -2803,7 +2803,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. Node is silenced.",pProgram->m_szName);
+			szTxt.Format("%s program succeeds. Node is silenced.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 			
 			// Set the node's silence level (At least 2 turns)
@@ -2813,7 +2813,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, RED);
 		}
 		break;
@@ -2831,7 +2831,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. Node is smoked.",pProgram->m_szName);
+			szTxt.Format("%s program succeeds. Node is smoked.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 			
 			// Set the node's silence level (At least two turns)
@@ -2841,7 +2841,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, RED);
 		}
 
@@ -2866,7 +2866,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			PlayGameSound(pProgram->m_nSound);
 
 			// Success. Print out a message saying so
-			szTxt.Format("%s program succeeds. %d duplicates created.",pProgram->m_szName, iSuccess);
+			szTxt.Format("%s program succeeds. %d duplicates created.",(LPCTSTR)(pProgram->m_szName), iSuccess);
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			// Add the decoys (keep ones already active
@@ -2886,7 +2886,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		else
 		{
 			// We missed. Print out a message saying so
-			szTxt.Format("%s program failed.",pProgram->m_szName);
+			szTxt.Format("%s program failed.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 		}
 		break;
@@ -2895,7 +2895,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// Medic automatically works, but loses effectiveness
 		if (g_pChar->m_nHealthDeck == MAX_HEALTH)
 		{
-			szTxt.Format("%s failed because you are not damaged.", pProgram->m_szName);
+			szTxt.Format("%s failed because you are not damaged.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -2920,7 +2920,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 				}
 
 				// Print a message
-				szTxt.Format("%s restored your deck to %d%% health.", pProgram->m_szName, (100/MAX_HEALTH)*g_pChar->m_nHealthDeck);
+				szTxt.Format("%s restored your deck to %d%% health.", (LPCTSTR)(pProgram->m_szName), (100/MAX_HEALTH)*g_pChar->m_nHealthDeck);
 				m_MessageView.AddMessage(szTxt, BLACK);
 
 				// Succeeded. Just reduce the rating by 1
@@ -2934,14 +2934,14 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			else
 			{
 				// Print a message
-				szTxt.Format("%s failed.", pProgram->m_szName);
+				szTxt.Format("%s failed.", (LPCTSTR)(pProgram->m_szName));
 				m_MessageView.AddMessage(szTxt, BLACK);
 			}
 
 			// Crash the program if necessary
 			if (pProgram->m_nLoadedRating == 0)
 			{
-				szTxt.Format("%s has crashed.", pProgram->m_szName);
+				szTxt.Format("%s has crashed.", (LPCTSTR)(pProgram->m_szName));
 				m_MessageView.AddMessage(szTxt, BLACK);
 
 				DoRemoveProgram(pProgram);
@@ -2960,7 +2960,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// See if this is the active armor
 		if (pProgram == g_pChar->m_pActiveArmor)
 		{
-			szTxt.Format("%s already active.", pProgram->m_szName);
+			szTxt.Format("%s already active.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -2987,7 +2987,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			// Play the program sound effect
 			PlayGameSound(pProgram->m_nSound);
 
-			szTxt.Format("%s activated.", pProgram->m_szName);
+			szTxt.Format("%s activated.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 
 			// Show the 'Armor Active' symbol
@@ -2999,7 +2999,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// See if this is the active hide
 		if (pProgram == g_pChar->m_pActiveHide)
 		{
-			szTxt.Format("%s already active.", pProgram->m_szName);
+			szTxt.Format("%s already active.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -3026,7 +3026,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			// Play the program sound effect
 			PlayGameSound(pProgram->m_nSound);
 
-			szTxt.Format("%s activated.", pProgram->m_szName);
+			szTxt.Format("%s activated.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 
 			// Show the 'Hide Active' symbol
@@ -3056,7 +3056,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			if (g_pChar->m_posScanFile == NULL)
 			{
 				// No scannable files
-				szTxt.Format("There are no valid targets for the %s program in this node.",pProgram->m_szName);
+				szTxt.Format("There are no valid targets for the %s program in this node.",(LPCTSTR)(pProgram->m_szName));
 				g_pChar->m_pActiveScan = NULL;
 				m_MessageView.AddMessage(szTxt, BLACK);
 				UpdateNodeIcons();
@@ -3156,7 +3156,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		if (g_pChar->m_posScanFile == NULL)
 		{
 			// No scannable files
-			szTxt.Format("There are no valid targets for the %s program in this node.",pProgram->m_szName);
+			szTxt.Format("There are no valid targets for the %s program in this node.",(LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 			g_pChar->m_pActiveScan = NULL;
 			UpdateNodeIcons();
@@ -3178,7 +3178,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// See if this is the active reflect
 		if (pProgram == g_pChar->m_pActiveReflect)
 		{
-			szTxt.Format("%s already active.", pProgram->m_szName);
+			szTxt.Format("%s already active.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -3205,7 +3205,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			// Play the program sound effect
 			PlayGameSound(pProgram->m_nSound);
 
-			szTxt.Format("%s activated.", pProgram->m_szName);
+			szTxt.Format("%s activated.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 
 			// Show the 'Reflect Active' symbol
@@ -3220,7 +3220,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 		// See if this is the active boost
 		if (pProgram == g_pChar->m_pActiveBoost)
 		{
-			szTxt.Format("%s already active.", pProgram->m_szName);
+			szTxt.Format("%s already active.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 		}
 		else
@@ -3247,7 +3247,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 			// Play the program sound effect
 			PlayGameSound(pProgram->m_nSound);
 
-			szTxt.Format("%s activated.", pProgram->m_szName);
+			szTxt.Format("%s activated.", (LPCTSTR)(pProgram->m_szName));
 			m_MessageView.AddMessage(szTxt, BLUE);
 
 			// Show the 'Boost Active' symbol
@@ -3314,7 +3314,7 @@ void CMatrixView::DoRunProgram(CProgram *pProgram)
 				if (!pNode->m_bActivated)
 				{
 					// This node has not been activated. Let the user know
-					szTxt.Format("Target node %s located", pNode->m_szName);
+					szTxt.Format("Target node %s located", (LPCTSTR)(pNode->m_szName));
 					m_MessageView.AddMessage(szTxt, BLUE);
 				}
 
@@ -3478,7 +3478,7 @@ void CMatrixView::DoEndPlayerTurn()
 		// Check for completion
 		if (g_pChar->m_nTransferTurnsLeft == 0)
 		{
-			szTxt.Format("Program %s has finished loading.", g_pChar->m_pTransferProgram->m_szName);
+			szTxt.Format("Program %s has finished loading.", (LPCTSTR)(g_pChar->m_pTransferProgram->m_szName));
 			m_MessageView.AddMessage(szTxt,BLUE);
 
 			// Adjust the loaded rating
@@ -3515,7 +3515,7 @@ void CMatrixView::DoEndPlayerTurn()
 					g_pChar->m_pTransferProgram->m_szName,
 					g_pChar->m_pTransferProgram->m_nClass);
 
-				m_SoftwareView.SetItemData(nIndex,(DWORD)g_pChar->m_pTransferProgram);
+				m_SoftwareView.SetItemData(nIndex,(DWORD_PTR)g_pChar->m_pTransferProgram);
 
 				g_pChar->CalcCurrentLoad();
 			}
@@ -3551,14 +3551,14 @@ void CMatrixView::DoEndPlayerTurn()
 			{
 				// Edit complete
 				PlayGameSound(SOUND_EDITCOMPLETE);
-				szTxt.Format("File %s has been edited.", g_pChar->m_pTransferFile->m_szName);
+				szTxt.Format("File %s has been edited.", (LPCTSTR)(g_pChar->m_pTransferFile->m_szName));
 				g_pChar->m_pTransferFile->m_nState |= STATE_EDITED_N;
 			}
 			else
 			{
 				// Download complete
 				PlayGameSound(SOUND_DOWNLOADCOMPLETE);
-				szTxt.Format("File %s has been downloaded.", g_pChar->m_pTransferFile->m_szName);
+				szTxt.Format("File %s has been downloaded.", (LPCTSTR)(g_pChar->m_pTransferFile->m_szName));
 				g_pChar->m_pTransferFile->m_nState |= STATE_IN_DECK;
 				if (g_pChar->m_pTransferFile->m_nState & STATE_EDITED_N)
 				{
@@ -3612,7 +3612,7 @@ void CMatrixView::DoEndPlayerTurn()
 			{
 				PlayGameSound(SOUND_EVALCOMPLETE);
 			}
-			szTxt.Format("%s has completed.", g_pChar->m_pActiveScan->m_szName);
+			szTxt.Format("%s has completed.", (LPCTSTR)(g_pChar->m_pActiveScan->m_szName));
 			m_MessageView.AddMessage(szTxt,BLUE);
 			g_pChar->m_pActiveScan = NULL;
 			UpdateNodeIcons();
@@ -3629,7 +3629,7 @@ void CMatrixView::DoEndPlayerTurn()
 					pFile->m_nState |= STATE_SCAN;
 
 					// Send a message
-					szTxt.Format("File %s has been scanned. (%s)", pFile->m_szName, pFile->GetScanString());
+					szTxt.Format("File %s has been scanned. (%s)", (LPCTSTR)(pFile->m_szName), pFile->GetScanString());
 					m_MessageView.AddMessage(szTxt,BLACK);
 
 					// Check for target file //FSO 6-20-01
@@ -3648,7 +3648,7 @@ void CMatrixView::DoEndPlayerTurn()
 					if (pFile->m_nType == FT_VALUABLE)
 					{
 						// Send a message
-						szTxt.Format("File %s has been evaluated. (%d)", pFile->m_szName, pFile->m_nValue);
+						szTxt.Format("File %s has been evaluated. (%d)", (LPCTSTR)(pFile->m_szName), pFile->m_nValue);
 					}
 					else if (pFile->m_nType == FT_CLUE)
 					{
@@ -3656,28 +3656,28 @@ void CMatrixView::DoEndPlayerTurn()
 						g_pChar->m_pSystem->MarkContractNodes(this);
 						m_MapView.RedrawWindow();
 
-						szTxt.Format("File %s has been evaluated. <Clue>", pFile->m_szName);
+						szTxt.Format("File %s has been evaluated. <Clue>", (LPCTSTR)(pFile->m_szName));
 					}
 					else if (pFile->m_nType == FT_PASSCODE)
 					{
 						g_pChar->m_pSystem->m_bPasscodeAccessed = TRUE;
 
 						m_MessageView.AddMessage("Passcode file accessed!", BLUE);
-						szTxt.Format("File %s has been evaluated. <Passcode>", pFile->m_szName);
+						szTxt.Format("File %s has been evaluated. <Passcode>", (LPCTSTR)(pFile->m_szName));
 					}
 					else if (pFile->m_nType == FT_PROGRAM)
 					{
 						GetSoftwareText(szTmp, pFile->m_nContents, pFile->m_nValue);
-						szTxt.Format("File %s has been evaluated. <%s>", pFile->m_szName, szTmp);
+						szTxt.Format("File %s has been evaluated. <%s>", (LPCTSTR)(pFile->m_szName), (LPCTSTR)(szTmp));
 					}
 					else if (pFile->m_nType == FT_P_SOURCE)
 					{
 						GetSoftwareText(szTmp, pFile->m_nContents, pFile->m_nValue);
-						szTxt.Format("File %s has been evaluated. <%s Source>", pFile->m_szName, szTmp);
+						szTxt.Format("File %s has been evaluated. <%s Source>", (LPCTSTR)(pFile->m_szName), (LPCTSTR)(szTmp));
 					}
 					else if (pFile->m_nType == FT_C_SOURCE)
 					{
-						szTxt.Format("File %s has been evaluated. <%s %d Source>", pFile->m_szName, GetChipName(pFile->m_nContents), pFile->m_nValue);
+						szTxt.Format("File %s has been evaluated. <%s %d Source>", (LPCTSTR)(pFile->m_szName), GetChipName(pFile->m_nContents), pFile->m_nValue);
 					}
 					m_MessageView.AddMessage(szTxt,BLACK);
 				}
@@ -3710,7 +3710,7 @@ void CMatrixView::DoEndPlayerTurn()
 					{
 						PlayGameSound(SOUND_EVALCOMPLETE);
 					}
-					szTxt.Format("%s has completed.", g_pChar->m_pActiveScan->m_szName);
+					szTxt.Format("%s has completed.", (LPCTSTR)(g_pChar->m_pActiveScan->m_szName));
 					m_MessageView.AddMessage(szTxt,BLUE);
 					g_pChar->m_pActiveScan = NULL;
 					UpdateNodeIcons();
@@ -3759,7 +3759,7 @@ void CMatrixView::DoEndPlayerTurn()
 			// Trace is complete
 			if (g_pChar->m_nTraceType==TST_NORMAL)
 			{
-				szTxt.Format("%s has completed its trace. All ice will now be hostile.", g_pChar->m_pTraceIce->m_szName);
+				szTxt.Format("%s has completed its trace. All ice will now be hostile.", (LPCTSTR)(g_pChar->m_pTraceIce->m_szName));
 				m_MessageView.AddMessage(szTxt,RED);
 				g_pChar->m_bTraced = TRUE;
 				g_pChar->m_pTraceIce = NULL; //FSO 8-7-01 Bug fix
@@ -3919,7 +3919,7 @@ void CMatrixView::DoEndPlayerTurn()
 				pNode->m_nActiveSilenceLevel--;
 				if (pNode->m_nActiveSilenceLevel == 0)
 				{
-					szTxt.Format("Node %s is no longer silenced.", pNode->m_szName);
+					szTxt.Format("Node %s is no longer silenced.", (LPCTSTR)(pNode->m_szName));
 					m_MessageView.AddMessage(szTxt,ORANGE);
 				}
 			}
@@ -3930,7 +3930,7 @@ void CMatrixView::DoEndPlayerTurn()
 				pNode->m_nActiveSmokeLevel--;
 				if (pNode->m_nActiveSmokeLevel == 0)
 				{
-					szTxt.Format("Node %s is no longer smoked.", pNode->m_szName);
+					szTxt.Format("Node %s is no longer smoked.", (LPCTSTR)(pNode->m_szName));
 					m_MessageView.AddMessage(szTxt,ORANGE);
 				}
 			}
@@ -3946,7 +3946,7 @@ void CMatrixView::DoEndPlayerTurn()
 		if (g_pChar->m_pActiveBoost->m_nLoadedRating == 0)
 		{
 			// Crash the program
-			szTxt.Format("Your boost program %s has expired.", g_pChar->m_pActiveBoost->m_szName);
+			szTxt.Format("Your boost program %s has expired.", (LPCTSTR)(g_pChar->m_pActiveBoost->m_szName));
 			m_MessageView.AddMessage(szTxt, RED);
 			DoRemoveProgram(g_pChar->m_pActiveBoost);
 			UpdateActiveBar();
@@ -4086,7 +4086,7 @@ void CMatrixView::DoQuery(CIce *pIce)
 	CString szTxt;
 
 	// Send a message
-	szTxt.Format("%s has queried you.",pIce->m_szName);
+	szTxt.Format("%s has queried you.",(LPCTSTR)(pIce->m_szName));
 	m_MessageView.AddMessage(szTxt,RED);
 
 	// Show the graphic
@@ -4591,7 +4591,7 @@ BOOL CMatrixView::AttemptNodeAccess()
 		if (DoRunProgramVsIce(g_pChar->m_pActiveHide, pGuardIce))
 		{
 			// Hide succeeded. Print out a message saying so
-			szTxt.Format("%s was successfully bypassed by the %s program.", pGuardIce->m_szName, g_pChar->m_pActiveHide->m_szName);
+			szTxt.Format("%s was successfully bypassed by the %s program.", (LPCTSTR)(pGuardIce->m_szName), (LPCTSTR)(g_pChar->m_pActiveHide->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			return TRUE;
@@ -4599,7 +4599,7 @@ BOOL CMatrixView::AttemptNodeAccess()
 		else
 		{
 			// We failed. Print out a message saying so
-			szTxt.Format("%s was not fooled by %s program.", pGuardIce->m_szName, g_pChar->m_pActiveHide->m_szName);
+			szTxt.Format("%s was not fooled by %s program.", (LPCTSTR)(pGuardIce->m_szName), (LPCTSTR)(g_pChar->m_pActiveHide->m_szName));
 			m_MessageView.AddMessage(szTxt, BLACK);
 
 			pGuardIce->m_bWasAccessed = TRUE;
@@ -4607,7 +4607,7 @@ BOOL CMatrixView::AttemptNodeAccess()
 	}
 	else
 	{
-		szTxt.Format("%s blocks your access.", pGuardIce->m_szName);
+		szTxt.Format("%s blocks your access.", (LPCTSTR)(pGuardIce->m_szName));
 		m_MessageView.AddMessage(szTxt, BLACK);
 	}
 	return FALSE;

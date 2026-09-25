@@ -174,7 +174,7 @@ BOOL LoadGraphics(const char *szDirectory)
 		g_hBitmaps[nIndex] = (HBITMAP)LoadImage(NULL, szFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		if (g_hBitmaps[nIndex] == NULL)
 		{
-			szMessage.Format("Error: Could not load graphics file %s.", szFileName);
+			szMessage.Format("Error: Could not load graphics file %s.", (LPCTSTR)(szFileName));
 			DeckerMessageBox(szMessage);
 			return FALSE;
 		}

@@ -167,7 +167,7 @@ BOOL CProjectDataDlg::OnInitDialog()
 		m_Source.SetItemText(i, 2, szTxt);
 
 		// Save the data
-		m_Source.SetItemData(i, (DWORD)pSource);
+		m_Source.SetItemData(i, (DWORD_PTR)pSource);
 
 		i++;
 	}
@@ -404,7 +404,7 @@ void CProjectDataDlg::DoCompleteProject()
 		}
 		m_Source.SetItemText(nIndex, 2, szTxt);
 
-		m_Source.SetItemData(nIndex, (DWORD)pSource);
+		m_Source.SetItemData(nIndex, (DWORD_PTR)pSource);
 
 		// Clear the project
 		g_pChar->m_nProjectType = -1;

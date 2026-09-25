@@ -90,7 +90,7 @@ BOOL CContractDataDialog::OnInitDialog()
 
 	m_pContract->GetDescriptiveText(m_description);
 	m_pay.Format("%d",m_pContract->m_nPay);
-	m_target_corp.Format("%s (%d)", m_pContract->m_szSystemName, m_pContract->m_nSystemSize);
+	m_target_corp.Format("%s (%d)", (LPCTSTR)(m_pContract->m_szSystemName), m_pContract->m_nSystemSize);
 	m_pContract->GetTypeText(m_type);
 	m_deadline.Format("%d days", m_pContract->m_nDaysLeft);
 	m_difficulty.Format("%d%%", (m_pContract->m_nDifficulty * 5));
@@ -101,7 +101,7 @@ BOOL CContractDataDialog::OnInitDialog()
 		CString szTmp;
 		// Show the current status
 		GetContractStatus(szTmp, m_status2, TRUE, FALSE);
-		m_status1.Format("Status: %s", szTmp);
+		m_status1.Format("Status: %s", (LPCTSTR)(szTmp));
 	}
 	else
 	{

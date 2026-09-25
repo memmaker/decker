@@ -108,17 +108,17 @@ BOOL CFileAccessDlg::OnInitDialog()
 	switch (m_nOperationType)
 	{
 	case FO_GET:
-		szTmp.Format("Select a file to download from %s", g_pChar->m_pCurrentNode->m_szName);
+		szTmp.Format("Select a file to download from %s", (LPCTSTR)(g_pChar->m_pCurrentNode->m_szName));
 		break;
 	case FO_EDIT:
-		szTmp.Format("Select a file to edit on %s", g_pChar->m_pCurrentNode->m_szName);
+		szTmp.Format("Select a file to edit on %s", (LPCTSTR)(g_pChar->m_pCurrentNode->m_szName));
 		break;
 	case FO_ERASE:
-		szTmp.Format("Select a file to erase from %s", g_pChar->m_pCurrentNode->m_szName);
+		szTmp.Format("Select a file to erase from %s", (LPCTSTR)(g_pChar->m_pCurrentNode->m_szName));
 		break;
 	//case FO_VIEW:
 	default:
-		szTmp.Format("Files on %s", g_pChar->m_pCurrentNode->m_szName);
+		szTmp.Format("Files on %s", (LPCTSTR)(g_pChar->m_pCurrentNode->m_szName));
 		break;
 	}
 	SetWindowText(szTmp);
@@ -226,7 +226,7 @@ BOOL CFileAccessDlg::OnInitDialog()
 		}
 
 		// Save a pointer to the program
-		m_Item_List.SetItemData(i,(DWORD)pFile);
+		m_Item_List.SetItemData(i,(DWORD_PTR)pFile);
 
 		i++;
 	}

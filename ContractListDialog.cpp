@@ -105,7 +105,7 @@ BOOL CContractListDialog::OnInitDialog()
 		m_Contract_List.SetItemText(i,1,szTmp);
 
 		// Target
-		szTmp.Format("%s (%d)", pContract->m_szSystemName, pContract->m_nSystemSize);
+		szTmp.Format("%s (%d)", (LPCTSTR)(pContract->m_szSystemName), pContract->m_nSystemSize);
 		m_Contract_List.SetItemText(i,2, szTmp);
 
 		// Deadline

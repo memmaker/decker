@@ -765,7 +765,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 		m_nSlowLevel--;
 		if (m_nSlowLevel==0)
 		{
-			szTxt.Format("%s is no longer slowed", m_szName);
+			szTxt.Format("%s is no longer slowed", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt,BLACK);
 		}
 		else
@@ -791,7 +791,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 
 		if (m_nVirusLevel==0)
 		{
-			szTxt.Format("%s is no longer infected", m_szName);
+			szTxt.Format("%s is no longer infected", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt,BLACK);
 		}
 		else
@@ -814,7 +814,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 
 		if (m_nConfusionLevel==0)
 		{
-			szTxt.Format("%s is no longer confused", m_szName);
+			szTxt.Format("%s is no longer confused", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt,BLACK);
 		}
 	}
@@ -826,7 +826,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 
 		if (m_nWeakenLevel==0)
 		{
-			szTxt.Format("%s is no longer weakened", m_szName);
+			szTxt.Format("%s is no longer weakened", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt,BLACK);
 		}
 	}
@@ -846,7 +846,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 			{
 				g_pChar->m_pTraceIce = NULL;
 
-				szTxt.Format("%s cancels its trace!", m_szName);
+				szTxt.Format("%s cancels its trace!", (LPCTSTR)(m_szName));
 				pView->m_MessageView.AddMessage(szTxt, BLUE);
 			}
 		}
@@ -861,7 +861,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 			{
 				// The ice has damaged itself
 				iDamage = ComputeDamage(iSuccess);
-				szTxt.Format("%s does %d%% damage to itself", m_szName, (iDamage*5));
+				szTxt.Format("%s does %d%% damage to itself", (LPCTSTR)(m_szName), (iDamage*5));
 				pView->m_MessageView.AddMessage(szTxt, BLUE);
 
 				// Apply the damage
@@ -915,7 +915,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 					{
 						// Did some damage. Send a message.
 						iDamage = ComputeDamage(iSuccess);
-						szTxt.Format("%s attacks %s for %d%% damage!", m_szName, pIce->m_szName, (iDamage*5));
+						szTxt.Format("%s attacks %s for %d%% damage!", (LPCTSTR)(m_szName), (LPCTSTR)(pIce->m_szName), (iDamage*5));
 						pView->m_MessageView.AddMessage(szTxt, BLUE);
 
 						// Apply the damage
@@ -928,7 +928,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 					else
 					{
 						// Missed. Send a message.
-						szTxt.Format("%s attacks %s but missed.", m_szName, pIce->m_szName);
+						szTxt.Format("%s attacks %s but missed.", (LPCTSTR)(m_szName), (LPCTSTR)(pIce->m_szName));
 						pView->m_MessageView.AddMessage(szTxt, BLACK);
 					}
 
@@ -1246,7 +1246,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 					iDamage = ComputeDamage(iSuccess);
 
 					// Print out a message saying so
-					szTxt.Format("%s explodes for %d%% damage.", m_szName, (iDamage*5));
+					szTxt.Format("%s explodes for %d%% damage.", (LPCTSTR)(m_szName), (iDamage*5));
 					pView->m_MessageView.AddMessage(szTxt, BLACK);
 
 					// Draw the damage
@@ -1268,7 +1268,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 							// The shield will crash
 							iDamage -= g_pChar->m_pActiveShield->m_nLoadedRating;
 							g_pChar->m_pActiveShield->m_nLoadedRating = 0;
-							szTxt.Format("Your shield program %s has crashed.", g_pChar->m_pActiveShield->m_szName);
+							szTxt.Format("Your shield program %s has crashed.", (LPCTSTR)(g_pChar->m_pActiveShield->m_szName));
 							pView->m_MessageView.AddMessage(szTxt, RED);
 							pView->DoRemoveProgram(g_pChar->m_pActiveShield);
 						}
@@ -1285,7 +1285,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 				else
 				{
 					// We missed. Print out a message saying so
-					szTxt.Format("%s exploded.", m_szName);
+					szTxt.Format("%s exploded.", (LPCTSTR)(m_szName));
 					pView->m_MessageView.AddMessage(szTxt, BLACK);
 				}
 			}
@@ -1293,7 +1293,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 			PlayGameSound(SOUND_FILEDESTROYED);
 
 			// Print a message
-			szTxt.Format("%s destroys file %s.", m_szName, m_pFile->m_szName);
+			szTxt.Format("%s destroys file %s.", (LPCTSTR)(m_szName), (LPCTSTR)(m_pFile->m_szName));
 			pView->m_MessageView.AddMessage(szTxt, ORANGE);
 
 			// Self destruct
@@ -1369,7 +1369,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 							if (Random(g_pChar->m_nDecoyCount+1)!=0)
 							{
 								// Hit the decoy
-								szTxt.Format("%s hits a decoy and destroys it.", m_szName);
+								szTxt.Format("%s hits a decoy and destroys it.", (LPCTSTR)(m_szName));
 								pView->m_MessageView.AddMessage(szTxt, BLACK);
 
 								// Erase the decoy
@@ -1383,7 +1383,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 						iDamage = ComputeDamage(iSuccess);
 
 						// Print out a message saying so
-						szTxt.Format("%s hits for %d%% damage.", m_szName, (iDamage*5));
+						szTxt.Format("%s hits for %d%% damage.", (LPCTSTR)(m_szName), (iDamage*5));
 						pView->m_MessageView.AddMessage(szTxt, BLACK);
 
 						// Check for reflect
@@ -1397,7 +1397,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 							if (iSuccess == -1)
 							{
 								g_pChar->m_pActiveReflect->m_nLoadedRating = 0;
-								szTxt.Format("Your reflect program %s has crashed.", g_pChar->m_pActiveReflect->m_szName);
+								szTxt.Format("Your reflect program %s has crashed.", (LPCTSTR)(g_pChar->m_pActiveReflect->m_szName));
 								pView->m_MessageView.AddMessage(szTxt, RED);
 								pView->DoRemoveProgram(g_pChar->m_pActiveReflect);
 							}
@@ -1445,7 +1445,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 								// The shield will crash
 								iDamage -= g_pChar->m_pActiveShield->m_nLoadedRating;
 								g_pChar->m_pActiveShield->m_nLoadedRating = 0;
-								szTxt.Format("Your shield program %s has crashed.", g_pChar->m_pActiveShield->m_szName);
+								szTxt.Format("Your shield program %s has crashed.", (LPCTSTR)(g_pChar->m_pActiveShield->m_szName));
 								pView->m_MessageView.AddMessage(szTxt, RED);
 								pView->DoRemoveProgram(g_pChar->m_pActiveShield);
 							}
@@ -1497,7 +1497,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 										pProgram = (CProgram *)olProgs.GetAt(p);
 
 										// Send a message
-										szTxt.Format("%s has crashed your %s program!", m_szName, pProgram->m_szName);
+										szTxt.Format("%s has crashed your %s program!", (LPCTSTR)(m_szName), (LPCTSTR)(pProgram->m_szName));
 										pView->m_MessageView.AddMessage(szTxt, RED);
 
 										// Crash it
@@ -1511,7 +1511,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 					else
 					{
 						// We missed. Print out a message saying so
-						szTxt.Format("%s program missed.", m_szName);
+						szTxt.Format("%s program missed.", (LPCTSTR)(m_szName));
 						pView->m_MessageView.AddMessage(szTxt, BLACK);
 					}
 				}
@@ -1565,7 +1565,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 							PlayGameSound(SOUND_TRACESTART);
 
 							// The trace has started
-							szTxt.Format("%s has started a trace! Trace will complete in %d turns.", m_szName, g_pChar->m_nTraceInitialTime);
+							szTxt.Format("%s has started a trace! Trace will complete in %d turns.", (LPCTSTR)(m_szName), g_pChar->m_nTraceInitialTime);
 							pView->m_MessageView.AddMessage(szTxt, RED);
 
 							pView->UpdateBar(BAR_TRACE);
@@ -1718,7 +1718,7 @@ void CIce::DoMove(int nDir, CMatrixView *pView)
 			PlayGameSound(SOUND_ICELEAVENODE);
 
 			// Send a message
-			szTxt.Format("%s has left the node.", m_szName);
+			szTxt.Format("%s has left the node.", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt,BLACK);
 
 			// Were we the targetted ice?
@@ -1771,7 +1771,7 @@ void CIce::DoMove(int nDir, CMatrixView *pView)
 		PlayGameSound(SOUND_ICEENTERNODE);
 
 		// Send a message
-		szTxt.Format("%s has entered the node.", m_szName);
+		szTxt.Format("%s has entered the node.", (LPCTSTR)(m_szName));
 		pView->m_MessageView.AddMessage(szTxt,BLACK);
 
 		// Add us to the current ice list
@@ -1849,7 +1849,7 @@ BOOL CIce::NoticedPlayer(CMatrixView *pView)
 		if (pView->DoRunProgramVsIce(g_pChar->m_pActiveHide, this))
 		{
 			// Not noticed
-			szTxt.Format("%s fails to notice you.", m_szName);
+			szTxt.Format("%s fails to notice you.", (LPCTSTR)(m_szName));
 			pView->m_MessageView.AddMessage(szTxt, BLACK);
 			return FALSE;
 		}
