@@ -354,9 +354,8 @@ void port_help(DWORD ctx)
 	EM_ASM({ if (typeof deckerHelp === 'function') deckerHelp($0); }, ctx);
 #else
 	char cmd[1200];
-	snprintf(cmd, sizeof cmd, "open '%s/help/index.html' &", getcwd(nullptr, 0));
+	snprintf(cmd, sizeof cmd, "open 'file://%s/doc/index.html#h%u' &", getcwd(nullptr, 0), (unsigned)ctx);
 	system(cmd);
-	(void)ctx;
 #endif
 }
 #ifdef __EMSCRIPTEN__
