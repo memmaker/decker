@@ -4139,6 +4139,7 @@ void CMatrixView::DoDumpDecker(int nCause)
 		else
 		{
 			// Death!
+			void rvipRunEnd(const char *, const char *); rvipRunEnd("death", NULL);
 			DeckerMessageBox("You have died!\n(Does anyone smell grey matter burning?)");
 			SendMessage(WM_CLOSE);
 			PostQuitMessage(0);

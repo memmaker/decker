@@ -32,6 +32,7 @@
 #include "Program.h"
 #include "DSFile.h"
 #include "DeckerSound.h"
+void rvipLastHit(const char *szIceName);
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1280,6 +1281,7 @@ BOOL CIce::DoAction(CMatrixView *pView)
 					{
 						// Do damage to the deck
 						g_pChar->m_nDamageDeck += iDamage;
+						rvipLastHit(m_szName);
 					}
 				}
 				else
@@ -1460,11 +1462,13 @@ BOOL CIce::DoAction(CMatrixView *pView)
 							{
 								// Damage the player
 								g_pChar->m_nDamageMental += iDamage;
+								rvipLastHit(m_szName);
 							}
 							else
 							{
 								// Do damage to the deck
 								g_pChar->m_nDamageDeck += iDamage;
+								rvipLastHit(m_szName);
 							}
 
 							// If this is crash ice, handle that

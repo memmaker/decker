@@ -169,3 +169,36 @@ BOOL port_key(CWnd *top, UINT vk, UINT mods)
 	}
 	return FALSE;
 }
+
+// Run report (roguelikes-index/server/CONTRACT.md): fire-and-forget GET,
+// never throws, offline just fails silently. Negative ints are omitted.
+// Killer = the ICE type name of the last ICE that did damage ("Name 1A2F"
+// instance suffix dropped). No score, turns or depth: the game keeps none.
+static char g_szRvipKiller[64];
+void rvipLastHit(const char *szIceName)
+{
+	snprintf(g_szRvipKiller, sizeof g_szRvipKiller, "%s", szIceName);
+	char *sp = strrchr(g_szRvipKiller, ' ');
+	if (sp && strlen(sp) == 5) *sp = 0;
+}
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+EM_JS(void, js_beacon, (const char *g, const char *ev, const char *name, const char *killer, int depth, int score, int turns, int lvl), {
+    try {
+        var p = [['g', UTF8ToString(g)], ['ev', UTF8ToString(ev)], ['name', name ? UTF8ToString(name) : ''],
+                 ['killer', killer ? UTF8ToString(killer) : ''], ['depth', depth], ['score', score], ['turns', turns], ['lvl', lvl]];
+        var q = p.filter(function (a) { return a[1] !== '' && !(a[1] < 0); })
+                 .map(function (a) { return a[0] + '=' + encodeURIComponent(a[1]); }).join('&');
+        fetch('/roguelikes/beacon?' + q, { keepalive: true, mode: 'no-cors' }).catch(function () {});
+    } catch (e) {}
+});
+#endif
+// ev: "death" (killer NULL = last ICE hit), "quit"; szKiller overrides.
+void rvipRunEnd(const char *ev, const char *szKiller)
+{
+#ifdef __EMSCRIPTEN__
+	if (!g_pChar) return;
+	if (!szKiller && !strcmp(ev, "death") && g_szRvipKiller[0]) szKiller = g_szRvipKiller;
+	js_beacon("decker", ev, (LPCTSTR)g_pChar->m_szName, szKiller, -1, -1, -1, g_pChar->m_nRepLevel);
+#endif
+}

@@ -127,6 +127,7 @@ void COptionsDlg::OnOptionsQuit()
 {
 	if (DeckerMessageBox("Are you sure you wish to quit?",MB_YESNO)==IDYES)
 	{
+		void rvipRunEnd(const char *, const char *); rvipRunEnd("quit", NULL);
 		// Set tooltips to disable when this dialog exits
 		g_pChar->m_bTooltips = FALSE;
 

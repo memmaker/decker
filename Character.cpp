@@ -684,6 +684,7 @@ BOOL CCharacter::PassTime(int nDays)
 			{
 				if (m_nLifestyle == 0)
 				{
+					void rvipRunEnd(const char *, const char *); rvipRunEnd("death", "Poverty");
 					DeckerMessageBox("You are broke. Some thugs come to 'reposess' all of your possessions, including your cyberdeck.\nGame over.");
 					// FSO 7-25-01 Now go to intro prompt
 					//PostQuitMessage(0);
