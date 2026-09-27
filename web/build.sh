@@ -8,7 +8,8 @@ set -e
 cd "$(dirname "$0")/.."
 OUT=web/dist
 rm -rf "$OUT" web/stage && mkdir -p "$OUT" web/stage
-cp -R DefaultGraphics Sound res Decker.ini web/stage/
+cp -R DefaultGraphics Sound Decker.ini web/stage/
+cp -R RES web/stage/res   # RES in git; lower-case for case-sensitive FS
 rm -f web/stage/res/*.ico web/stage/res/*.rc2
 SRCS=$(ls *.cpp port/*.cpp)
 em++ -O2 -std=c++17 -Iport -I. -w -fno-delete-null-pointer-checks -sUSE_SDL=2 \
