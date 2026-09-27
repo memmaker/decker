@@ -2,7 +2,7 @@
  * Decker in the browser: the SDL2 build (port/fe_sdl.cpp) draws the 640x480
  * screen into #canvas; this file scales it (nearest-neighbour), keeps the
  * save folder in IndexedDB (IDBFS, /decker/save), and runs the top bar:
- * help, sound toggle (off by default), export/import. Loaded before decker-core.js.
+ * help, File ▾ (export/import/new game), Audio ▾ (sound, off by default). Loaded before decker-core.js.
  * Page layout copied from ~/Games/omega/web.
  */
 (function () {
@@ -70,8 +70,7 @@
 	/* ---------- sound (off by default, remembered in IndexedDB) ---------- */
 	function setSound(on, store) {
 		sound = on;
-		$('btn-sound').textContent = 'Sound: ' + (on ? 'on' : 'off');
-		$('btn-sound').classList.toggle('on', on);
+		$('chk-sound').checked = on;
 		if (running) Module._web_set_sound(on ? 1 : 0);
 		if (store) { try { Module.FS.writeFile(SETTINGS, JSON.stringify({ sound: on })); syncFiles(); } catch (e) { } }
 		/* browsers start audio only after a click */
@@ -179,7 +178,10 @@
 		$('help-frame').onload = function () {
 			try { this.contentWindow.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeHelp(); }); } catch (e) { }
 		};
-		$('btn-sound').onclick = function () { setSound(!sound, true); };
+		RvipWM.dropdown($('btn-file'), $('menu-file'));
+		RvipWM.dropdown($('btn-audio'), $('menu-audio'));
+		$('chk-sound').onchange = function () { setSound(this.checked, true); $('canvas').focus(); };
+		$('btn-new').onclick = function () { location.reload(); };
 		$('btn-restart').onclick = function () { location.reload(); };
 		document.querySelectorAll('button').forEach(function (b) {
 			b.addEventListener('mousedown', function (e) { e.preventDefault(); });

@@ -73,6 +73,15 @@
 	#help-body code { font: 12px ui-monospace, Menlo, monospace; background: #22222a; padding: 0 4px; border-radius: 3px; }
 	#help-body .or { color: var(--dim); font-size: 12px; margin: 0 3px; }
 	#help-body .plus { color: var(--dim); margin: 0 2px; }
+	/* top-bar drop-downs (RvipWM.dropdown); the WM injects this CSS only in create() */
+	.wm-menu { position: fixed; z-index: 20; background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+		padding: 4px 0; box-shadow: 0 6px 24px rgba(0,0,0,.5); font-size: 13px; }
+	.wm-menu[hidden] { display: none; }
+	.wm-menu label { display: flex; gap: 8px; align-items: center; padding: 3px 12px; cursor: pointer; white-space: nowrap; }
+	.wm-menu label:hover, .wm-menu button:hover { background: #22222a; }
+	.wm-menu hr { border: 0; border-top: 1px solid var(--line); margin: 5px 0; }
+	.wm-menu button { display: block; width: 100%; margin: 0; padding: 4px 14px; border: 0; border-radius: 0; background: none; text-align: left; white-space: nowrap; }
+	#bar .hint kbd { font-size: 11px; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -80,14 +89,21 @@
 	<h1><a href="../shrine/decker.html">DECKER</a></h1>
 	<button id="btn-help" title="Game guide, controls and saving">Help</button>
 	<button id="btn-manual" title="The original Decker help file">Manual</button>
+	<button id="btn-file" title="Saves and new game">File ▾</button>
 	<span class="sep"></span>
-	<button id="btn-sound" title="Sound effects on/off">Sound: off</button>
-	<span class="sep"></span>
-	<button id="btn-export" title="Download your newest save file">Export save</button>
-	<button id="btn-import" title="Add a save file (.DSG) from disk; load it with Load Game">Import save</button>
+	<button id="btn-audio" title="Sound on/off">Audio ▾</button>
+	<div id="menu-file" hidden>
+		<button id="btn-export" title="Download your newest save file">Export save</button>
+		<button id="btn-import" title="Add a save file (.DSG) from disk; load it with Load Game">Import save</button>
+		<hr>
+		<button id="btn-new" title="Reload the page and start over (saves are kept)">New game</button>
+	</div>
+	<div id="menu-audio" hidden>
+		<label><input type="checkbox" id="chk-sound"> Sound effects</label>
+	</div>
 	<input type="file" id="import-file" accept=".dsg,.DSG" hidden>
 	<span class="sp"></span>
-	<span class="hint">Enter: all commands · X: explore (Matrix) · F1: help for this screen</span>
+	<span class="hint"><kbd>Enter</kbd> command menu · <kbd>X</kbd> explore (Matrix) · <kbd>F1</kbd> help for this screen</span>
 </div>
 
 <div id="status">Loading Decker…</div>
@@ -110,7 +126,7 @@
 	</div>
 </div>
 
-<script src="../rvip-wm.js"></script><!-- only RvipWM.report (run-report outbox); window manager unused -->
+<script src="../rvip-wm.js"></script><!-- RvipWM.report and RvipWM.dropdown; window manager unused -->
 <script src="decker.js"></script>
 <script src="decker-core.js"></script>
 </body>
