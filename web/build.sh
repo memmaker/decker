@@ -20,7 +20,7 @@ em++ -O2 -std=c++17 -Iport -I. -w -fno-delete-null-pointer-checks -sUSE_SDL=2 \
 	-sEXPORTED_RUNTIME_METHODS=FS,IDBFS,addRunDependency,removeRunDependency \
 	-sFORCE_FILESYSTEM -lidbfs.js -sENVIRONMENT=web
 rm -rf web/stage
-cp web/index.html web/decker.js "$HOME/Games/rvip-tools/web/rvip-wm.js" "$OUT/"
+cp web/index.html web/decker.js "$OUT/"
 cp -R doc "$OUT/doc"
 python3 web/make-help.py > "$OUT/help.html"
 ls -la "$OUT"
