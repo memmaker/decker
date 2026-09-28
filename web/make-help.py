@@ -34,7 +34,7 @@ WEB = '''<ul>
 <li>The original 640×480 Windows screen, scaled to the window with sharp pixels. Resize the browser window to change the size.</li>
 <li>Everything works with the mouse, as in the original. <kbd>Enter</kbd> opens a menu of every command on the current screen.</li>
 <li><em>Sound</em> in the top bar turns the game's sound effects on (off by default). The game's own Options → Sound Effects setting also applies.</li>
-<li><kbd>F1</kbd> or <em>Manual</em> opens the original Decker help file; <kbd>Esc</kbd> or <em>Close</em> returns to the game.</li>
+<li><kbd>F1</kbd> opens the original Decker help file at the topic of the current screen; in Help, <em>Manual</em> opens it at its contents and <em>Guide</em> comes back here. <kbd>Esc</kbd> or <em>Close</em> returns to the game.</li>
 <li>Browsers keep a few shortcuts for themselves (<kbd>Ctrl+W</kbd>, <kbd>Ctrl+T</kbd>, <kbd>Cmd</kbd> shortcuts on a Mac).</li>
 <li>If the game ever crashes, a message appears at the top; reload the page and load your last save.</li>
 </ul>'''
@@ -58,7 +58,7 @@ def section(anchor, title, body):
 
 parts = []
 toc = [('about', 'About the game'), ('keys', 'Keyboard controls'), ('saving', 'Saving your game'),
-       ('tips', 'Tips'), ('guide', "New player's guide"), ('web', 'Playing in the browser')]
+       ('tips', 'Tips'), ('guide', "New player's guide"), ('web', 'Playing in the browser'), ('manual', 'Manual')]
 parts.append('<p>' + esc(game['tagline']) + '</p>' + info['About the game'] + '<ul class="toc">' +
              ''.join(f'<li><a href="#h-{a}">{esc(t)}</a></li>' for a, t in toc) + '</ul>')
 
@@ -78,6 +78,10 @@ parts.append(section('tips', 'Tips', info['Tips']))
 parts.append(section('guide', "New player's guide",
                      ''.join(f'<h3>{esc(t)}</h3>{b}' for t, b in guide.items())))
 parts.append(section('web', 'Playing in the browser', WEB))
+parts.append(section('manual', 'Manual',
+                     '<p>The original Decker help file by Shawn Overcash (<code>Help/Decker.rtf</code>, converted to HTML): every screen, '
+                     'program and rule in detail. <a href="doc/index.html" data-manual>Open the Decker manual</a> '
+                     '(<kbd>F1</kbd> in the game opens it at the current screen).</p>'))
 
 # RVIP: About this version
 parts.append('<h2 id="h-version">About this version</h2><ul>'

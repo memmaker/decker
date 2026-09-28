@@ -53,6 +53,7 @@
 		width: min(980px, calc(100vw - 32px)); height: calc(100vh - 64px); display: flex; flex-direction: column; }
 	#help .head { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); }
 	#help .head h2 { margin: 0; font-size: 16px; color: var(--accent); flex: 1; }
+	#help .head button + button { margin-left: 8px; }
 	#help-body { overflow: auto; padding: 4px 24px 32px; outline: none; font-size: 14px; line-height: 1.6; }
 	#help-body h2 { font-size: 19px; margin: 28px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--text); }
 	#help-body h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin: 18px 0 8px; }
@@ -79,8 +80,7 @@
 <body>
 <div id="bar">
 	<h1><a href="../shrine/decker.html">DECKER</a></h1>
-	<button id="btn-help" title="Game guide, controls and saving">Help</button>
-	<button id="btn-manual" title="The original Decker help file">Manual</button>
+	<button id="btn-help" title="Game guide, controls, saving and the original manual">Help</button>
 	<button id="btn-file" title="Saves and new game">File ▾</button>
 	<span class="sep"></span>
 	<button id="btn-audio" title="Sound on/off">Audio ▾</button>
@@ -104,7 +104,7 @@
 
 <div id="help" hidden>
 	<div class="panel" role="dialog" aria-label="Decker guide">
-		<div class="head"><h2 id="help-title">Decker guide</h2><button id="help-close">Close</button></div>
+		<div class="head"><h2 id="help-title">Decker guide</h2><button id="help-switch" title="The original Decker help file">Manual</button><button id="help-close">Close</button></div>
 		<div id="help-body" tabindex="-1">Loading…</div>
 		<iframe id="help-frame" title="Decker manual" hidden></iframe>
 	</div>

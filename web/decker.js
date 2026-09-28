@@ -55,12 +55,16 @@
 		h.hidden = false;
 		if (manualCtx !== undefined) {
 			$('help-title').textContent = 'Decker manual';
+			$('help').firstElementChild.setAttribute('aria-label', 'Decker manual');
+			$('help-switch').textContent = 'Guide'; $('help-switch').title = 'Back to the game guide';
 			body.hidden = true; fr.hidden = false;
 			fr.src = 'doc/index.html' + (manualCtx ? '#h' + manualCtx : '');
 			fr.focus();
 			return;
 		}
 		$('help-title').textContent = 'Decker guide';
+		$('help').firstElementChild.setAttribute('aria-label', 'Decker guide');
+		$('help-switch').textContent = 'Manual'; $('help-switch').title = 'The original Decker help file';
 		body.hidden = false; fr.hidden = true;
 		if (!helpLoaded) {
 			helpLoaded = true;
@@ -129,7 +133,12 @@
 	$('canvas').addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, true);
 	document.addEventListener('DOMContentLoaded', function () {
 		$('btn-help').onclick = function () { $('help').hidden ? showHelp() : closeHelp(); };
-		$('btn-manual').onclick = function () { showHelp(0); };
+		/* the second document: the original manual, reached from Help (head button or the guide's Manual section) */
+		$('help-switch').onclick = function () { $('help-frame').hidden ? showHelp(0) : showHelp(); };
+		$('help-body').addEventListener('click', function (e) {
+			var a = e.target.closest && e.target.closest('a[data-manual]');
+			if (a) { e.preventDefault(); showHelp(0); }
+		});
 		$('help-close').onclick = closeHelp;
 		/* Escape inside the manual (same-origin iframe) closes it too */
 		$('help-frame').onload = function () {
