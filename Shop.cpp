@@ -20,8 +20,8 @@
 // Shop.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "Shop.h"
 #include "Character.h"
 #include "ShopItem.h"

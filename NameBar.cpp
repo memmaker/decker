@@ -20,8 +20,8 @@
 // NameBar.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "NameBar.h"
 #include "Global.h"
 

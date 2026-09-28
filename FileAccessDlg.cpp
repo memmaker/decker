@@ -20,8 +20,8 @@
 // FileAccessDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "FileAccessDlg.h"
 #include "Character.h"
 #include "DSFile.h"

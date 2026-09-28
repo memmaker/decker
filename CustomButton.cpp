@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "CustomButton.h"
 
 #ifdef _DEBUG

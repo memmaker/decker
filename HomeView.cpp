@@ -21,9 +21,9 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "decker.h"
-#include "HomeView.h"
+#include "StdAfx.h"
+#include "Decker.h"
+#include "HOMEVIEW.H"
 #include "MatrixView.h"
 #include "Character.h"
 #include "OptionsDlg.h"

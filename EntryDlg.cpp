@@ -20,8 +20,8 @@
 // EntryDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "EntryDlg.h"
 #include "Global.h"
 

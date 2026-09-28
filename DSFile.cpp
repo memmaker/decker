@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "DSFile.h"
 #include "Node.h"
 #include "Area.h"

@@ -21,8 +21,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "Character.h"
 #include "Program.h"
 #include "Contract.h"

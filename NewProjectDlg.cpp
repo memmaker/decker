@@ -20,8 +20,8 @@
 // NewProjectDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "NewProjectDlg.h"
 #include "Character.h"
 #include "Program.h"

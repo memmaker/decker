@@ -20,8 +20,8 @@
 // HealthBar.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "HealthBar.h"
 #include "MatrixView.h"
 

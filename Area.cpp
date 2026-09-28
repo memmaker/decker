@@ -21,7 +21,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "System.h"
 #include "Area.h"
 #include "Node.h"

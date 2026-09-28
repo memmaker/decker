@@ -19,8 +19,8 @@
 
 // DeckDataDialog.cpp : implementation file
 //
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "DeckDataDialog.h"
 #include "Character.h"
 #include "Program.h"

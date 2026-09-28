@@ -20,8 +20,8 @@
 // MessageView.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "MessageView.h"
 #include "Global.h"
 

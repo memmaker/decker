@@ -21,7 +21,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Node.h"
 #include "Character.h"
 #include "Ice.h"

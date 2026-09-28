@@ -20,8 +20,8 @@
 // MissionResultsDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "MissionResultsDlg.h"
 
 #ifdef _DEBUG

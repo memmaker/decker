@@ -20,7 +20,7 @@
 // DeckerDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Decker.h"
 #include "IntroDlg.h"
 #include "NewCharDlg.h"

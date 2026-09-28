@@ -1,8 +1,8 @@
 // RVIP additions: Enter command menu (home and Matrix), auto-explore (X) in
 // the Matrix, numeric keypad movement. Hooked from the frontend's key handler.
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Decker.h"
-#include "HomeView.h"
+#include "HOMEVIEW.H"
 #include "MatrixView.h"
 #include "Character.h"
 #include "System.h"

@@ -17,9 +17,9 @@
 //Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include <mmsystem.h>
-#include "decker.h"
+#include "Decker.h"
 #include "DeckerSound.h"
 #include "Global.h"
 

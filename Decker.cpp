@@ -20,10 +20,10 @@
 // Decker.cpp : Defines the class behaviors for the application.
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Decker.h"
 #include "IntroDlg.h"
-#include "HomeView.h"
+#include "HOMEVIEW.H"
 #include "Character.h"
 #include "Ice.h"
 #include "DeckerSound.h"

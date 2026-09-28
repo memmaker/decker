@@ -20,8 +20,8 @@
 // ContractDataDialog.cpp : implementation file
 //
 
-#include "stdafx.h"
-#include "decker.h"
+#include "StdAfx.h"
+#include "Decker.h"
 #include "ContractDataDialog.h"
 #include "Character.h"
 #include "Contract.h"
