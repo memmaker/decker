@@ -89,7 +89,7 @@
 
 	/* ---------- startup ---------- */
 	/* help stays here: it also shows the original manual (doc/) in an iframe; New game only restarts (saves are kept) */
-	app = RvipApp({ name: 'decker', save: newestSave, clear: function () { }, put: putSave });
+	app = RvipApp({ name: 'decker', save: newestSave, clear: function () { }, put: putSave, newGame: function () { location.reload(); } });
 	window.Module = {
 		canvas: document.getElementById('canvas'),
 		preRun: [function () {
@@ -138,7 +138,6 @@
 		RvipWM.dropdown($('btn-file'), $('menu-file'));
 		RvipWM.dropdown($('btn-audio'), $('menu-audio'));
 		$('chk-sound').onchange = function () { setSound(this.checked, true); $('canvas').focus(); };
-		$('btn-new').onclick = function () { location.reload(); };
 		$('btn-restart').onclick = function () { location.reload(); };
 		document.querySelectorAll('button').forEach(function (b) {
 			b.addEventListener('mousedown', function (e) { e.preventDefault(); });
