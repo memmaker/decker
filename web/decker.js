@@ -9,13 +9,9 @@
 	'use strict';
 
 	var DIR = '/decker/save', SETTINGS = DIR + '/web-settings.json';
-	var running = false, sound = false;
+	var app, sound = false;
 
 	function $(id) { return document.getElementById(id); }
-	function status(msg, isError) {
-		var s = $('status');
-		s.textContent = msg; s.hidden = !msg; s.classList.toggle('error', !!isError);
-	}
 
 	/* ---------- scaling: largest size that fits, whole pixels when it can ---------- */
 	function fit() {
@@ -27,17 +23,6 @@
 	}
 
 	/* ---------- saves: IndexedDB (IDBFS) ---------- */
-	var syncing = false, syncAgain = false;
-	function syncFiles() {
-		if (!Module.FS) return;
-		if (syncing) { syncAgain = true; return; }
-		syncing = true;
-		Module.FS.syncfs(false, function (err) {
-			syncing = false;
-			if (err) status('Saving to browser storage (IndexedDB) failed: ' + err + '. Use "Export save" to keep a copy.', true);
-			if (syncAgain) { syncAgain = false; syncFiles(); }
-		});
-	}
 	function saves() {
 		try {
 			return Module.FS.readdir(DIR).filter(function (n) { return /\.dsg$/i.test(n); })
@@ -45,34 +30,20 @@
 				.sort(function (a, b) { return b.t - a.t; });
 		} catch (e) { return []; }
 	}
-	function exportSave() {
-		var s = saves()[0];
-		if (!s) { status('There is no saved game yet (Options → Save As…).', true); setTimeout(function () { status(''); }, 2500); return; }
-		var a = document.createElement('a');
-		a.href = URL.createObjectURL(new Blob([Module.FS.readFile(DIR + '/' + s.name)], { type: 'application/octet-stream' }));
-		a.download = s.name;
-		document.body.appendChild(a); a.click();
-		setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-	}
-	function importSave(file) {
-		var r = new FileReader();
-		r.onload = function () {
-			var name = file.name.replace(/[^\w.-]/g, '_');
-			if (!/\.dsg$/i.test(name)) name += '.DSG';
-			Module.FS.writeFile(DIR + '/' + name, new Uint8Array(r.result));
-			syncFiles();
-			status('Imported ' + name + '. Load it with Options → Load Game (or Load on the title screen).');
-			setTimeout(function () { status(''); }, 4000);
-		};
-		r.readAsArrayBuffer(file);
+	/* Export save: the newest .dsg; Import save adds the file (other saves stay) */
+	function newestSave() { var s = saves()[0]; return s ? DIR + '/' + s.name : null; }
+	function putSave(file, data) {
+		var name = file.name.replace(/[^\w.-]/g, '_');
+		if (!/\.dsg$/i.test(name)) name += '.DSG';
+		Module.FS.writeFile(DIR + '/' + name, data);
 	}
 
 	/* ---------- sound (off by default, remembered in IndexedDB) ---------- */
 	function setSound(on, store) {
 		sound = on;
 		$('chk-sound').checked = on;
-		if (running) Module._web_set_sound(on ? 1 : 0);
-		if (store) { try { Module.FS.writeFile(SETTINGS, JSON.stringify({ sound: on })); syncFiles(); } catch (e) { } }
+		if (app.running) Module._web_set_sound(on ? 1 : 0);
+		if (store) { try { Module.FS.writeFile(SETTINGS, JSON.stringify({ sound: on })); app.sync(); } catch (e) { } }
 		/* browsers start audio only after a click */
 		if (on && window.SDL2 && SDL2.audioContext && SDL2.audioContext.state === 'suspended') SDL2.audioContext.resume();
 	}
@@ -101,10 +72,10 @@
 	}
 	function closeHelp() { $('help').hidden = true; $('canvas').focus(); }
 	window.deckerHelp = function (ctx) { showHelp(ctx || 0); };
-	window.deckerSync = syncFiles;
+	window.deckerSync = function () { app.sync(); };
 	window.deckerEnd = function () {
-		running = false;
-		syncFiles();
+		app.running = false;
+		app.sync();
 		$('overlay').hidden = false;
 	};
 	/* while a panel is open the game gets no keys (SDL listens on window) */
@@ -117,6 +88,8 @@
 	window.addEventListener('keyup', function (e) { if (!$('help').hidden) e.stopImmediatePropagation(); }, true);
 
 	/* ---------- startup ---------- */
+	/* help stays here: it also shows the original manual (doc/) in an iframe; New game only restarts (saves are kept) */
+	app = RvipApp({ name: 'decker', save: newestSave, clear: function () { }, put: putSave });
 	window.Module = {
 		canvas: document.getElementById('canvas'),
 		preRun: [function () {
@@ -125,37 +98,24 @@
 			FS.mount(Module.IDBFS, {}, DIR);
 			Module.addRunDependency('idbfs');
 			FS.syncfs(true, function (err) {
-				if (err) status('Could not read saved games from IndexedDB (' + err + '). Saving may not work in this browser mode.', true);
+				if (err) app.status('Could not read saved games from IndexedDB (' + err + '). Saving may not work in this browser mode.', true);
 				try { sound = !!JSON.parse(FS.readFile(SETTINGS, { encoding: 'utf8' })).sound; } catch (e) { }
 				Module.removeRunDependency('idbfs');
 			});
 		}],
 		onRuntimeInitialized: function () {
-			running = true; status('');
+			app.running = true; app.status('');
 			$('game').hidden = false;
 			setTimeout(function () { fit(); setSound(sound, false); $('canvas').focus(); }, 0);
 		},
 		print: function (s) { console.log(s); },
 		printErr: function (s) { console.warn(s); },
-		setStatus: function (s) { if (s && !running) status(s.replace(/\(\d+\/\d+\)/, '').trim() || 'Loading…'); },
-		onAbort: function (what) { crashed(what); }
+		setStatus: function (s) { if (s && !app.running) app.status(s.replace(/\(\d+\/\d+\)/, '').trim() || 'Loading…'); },
+		onAbort: function (what) { app.crashed(what); }
 	};
-	function crashed(err) {
-		if (!running) return;
-		running = false;
-		var msg = (err && (err.message || err.reason && err.reason.message)) || String(err);
-		console.error('[decker] crash:', err);
-		status('The game crashed (' + msg + '). Reload the page; your saves are kept.', true);
-	}
-	window.addEventListener('unhandledrejection', function (e) {
-		if (e.reason && e.reason.name === 'ExitStatus') return;
-		crashed(e.reason);
-	});
-	window.addEventListener('error', function (e) {
-		if (e.error && e.error.name === 'ExitStatus') return;
-		if (e.error instanceof WebAssembly.RuntimeError || /decker-core/.test(e.filename || '')) crashed(e.error || e.message);
-	});
-	window.addEventListener('beforeunload', function (e) { if (running) { e.preventDefault(); e.returnValue = ''; } });
+	document.addEventListener('visibilitychange', function () { if (document.hidden) app.sync(); });
+	window.addEventListener('pagehide', function () { app.sync(); });
+	window.addEventListener('beforeunload', function (e) { if (app.running) { e.preventDefault(); e.returnValue = ''; } });
 	window.addEventListener('resize', fit);
 	/* SDL2 takes a button's position from the last mousemove: send one first
 	   (touch taps and some synthetic clicks have none) */
@@ -168,9 +128,6 @@
 	});
 	$('canvas').addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; }, true);
 	document.addEventListener('DOMContentLoaded', function () {
-		$('btn-export').onclick = exportSave;
-		$('btn-import').onclick = function () { $('import-file').click(); };
-		$('import-file').onchange = function () { if (this.files[0]) importSave(this.files[0]); this.value = ''; };
 		$('btn-help').onclick = function () { $('help').hidden ? showHelp() : closeHelp(); };
 		$('btn-manual').onclick = function () { showHelp(0); };
 		$('help-close').onclick = closeHelp;
