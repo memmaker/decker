@@ -15,7 +15,7 @@ from sourceforge.net/projects/decker, commit c61cf6e (sha256 in its message).
   https://ruzzoli.de/roguelikes/decker/. Saves in IndexedDB at
   `/decker/save`; `CFile::Close` after writing calls `deckerSync`.
 - Tiles/sound: the game's own bitmaps (`DefaultGraphics/`, `res/`) and WAVs
-  (`Sound/`). Web sound off by default (top-bar toggle, remembered).
+  (`Sound/`). Web sound off by default (Audio ▾, remembered).
 - Help: `doc/index.html` from `Help/Decker.rtf` (`port/rtf2html.py`), numeric
   anchors `#h<HID>` so F1 opens the topic of the current screen.
 
@@ -36,6 +36,6 @@ from sourceforge.net/projects/decker, commit c61cf6e (sha256 in its message).
   the Matrix view from inside its own Options dialog (shim defers the
   destroy of a window that owns a running modal).
 
-## RVIP progress
-All stages done (1–8). Open: nothing known. Web quirks worth knowing are in
-RVIP.md O-Decker.
+## Status
+All RVIP stages done. Open: nothing known. Web/MFC-shim lessons: RVIP.md 5.3
+(Windows MFC) and 5.2.
